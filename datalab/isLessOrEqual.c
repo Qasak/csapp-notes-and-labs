@@ -33,6 +33,7 @@ int isLessOrEqual(int x, int y) {
     int sign_y=(y>>31)&1;
     int sign_m_x=((~x+1)>>31)&1;
     int sign_sum=((y+(~x+1))>>31)&1;
-    int of_flag=((!(sign_y^sign_m_x))&sign_y)^(sign_sum);
+    int is_same_sign=(!(sign_y^sign_m_x));
+    int of_flag=is_same_sign&(sign_y^sign_sum);
     return (!(of_flag^sign_sum));
 }
