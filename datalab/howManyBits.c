@@ -141,3 +141,16 @@ int showbits(int x)
     }
     cout<<" ";
 }
+int main() {
+    //freopen("out.txt","w",stdout);
+    int n=0xff;
+    start=clock();
+    for(int i=0x0;i<n;i++)
+    {
+        int r1=i;
+        cout<<hex<<"   "<<r1<<"    ";
+        showbits(r1);
+        cout<<_howManyBits(r1)<<endl;
+    }
+  return 0;
+}
