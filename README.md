@@ -1,6 +1,6 @@
 # all-about-csapp-labs
-Solutions of Computer Systems: A Programmer's Perspective 's lab
+Solutions of Computer Systems: A Programmer's Perspective's labs
 
-Computer Systems: A Programmer's Perspective 's lab全部题解
+CSAPP lab全部题解
 
 > All solutions written by github user Qasak
