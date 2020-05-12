@@ -5,8 +5,6 @@
  *   Max ops: 24
  *   Rating: 3
  */
-
-int isLessOrEqual(int x, int y) {
     /* x<=y
        <=> !(y<x) ,在(y+(-x))不溢出的情况下
        <=> !(y+(-x)<0)
@@ -30,6 +28,7 @@ int isLessOrEqual(int x, int y) {
 
        综上:
     */
+int isLessOrEqual(int x, int y) {
     int sign_y=(y>>31)&1;
     int sign_m_x=((~x+1)>>31)&1;
     int sign_sum=((y+(~x+1))>>31)&1;
