@@ -129,3 +129,15 @@ int _howManyBits(int x){
     }
     return ans;
 }
+
+int showbits(int x)
+{
+    int i=32;
+    while(i--)
+    {
+        cout<<((x>>31)&1);
+        x<<=1;
+        cout<<((!(i%4))?" ":"");
+    }
+    cout<<" ";
+}
