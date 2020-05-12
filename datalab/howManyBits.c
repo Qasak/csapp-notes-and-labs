@@ -94,3 +94,38 @@ int howManyBits(int x) {
 
     return (n+1);//ops 58
 }
+
+
+
+
+//枚举打表用的函数
+int _howManyBits(int x){
+    int ans=0;
+    if((x>>31)&1)
+    {
+        int cnt=1;
+        int pos_0=0;
+        int t=x;
+        while(cnt<=32)
+        {
+            if(!(t&1)) pos_0=cnt;
+            t>>=1;
+            cnt++;
+        }
+        ans=pos_0+1;
+    }
+    else
+    {
+        int cnt=1;
+        int pos_1=0;
+        int t=x;
+        while(cnt<=32)
+        {
+            if((t&1)) pos_1=cnt;
+            t>>=1;
+            cnt++;
+        }
+        ans=pos_1+1;
+    }
+    return ans;
+}
