@@ -31,8 +31,10 @@
 int isLessOrEqual(int x, int y) {
     int sign_y=(y>>31)&1;
     int sign_m_x=((~x+1)>>31)&1;
-    int sign_sum=((y+(~x+1))>>31)&1;
+    int sum=y+(~x+1);
+    int sign_sum=(sum>>31)&1;
     int is_same_sign=(!(sign_y^sign_m_x));
     int of_flag=is_same_sign&(sign_y^sign_sum);
-    return (!(of_flag^sign_sum));
+    return ((!(of_flag^sign_sum))|(!(~((~(1<<31))^x))));//注意当x==Tmin,x>0,(即两数异号不会溢出的情况)由于Tmin=-Tmin,会导致y+(-x)永远<0(而两数均为Tmin时==0)
+                                                        //故判定失效,此时需要将x==Tmin特殊处理,即x==Tmin时总是返回1.
 }
