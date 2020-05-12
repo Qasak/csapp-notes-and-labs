@@ -98,7 +98,7 @@ int howManyBits(int x) {
 
 
 
-//枚举打表用的函数
+//以下是枚举打表用的函数
 int _howManyBits(int x){
     int ans=0;
     if((x>>31)&1)
