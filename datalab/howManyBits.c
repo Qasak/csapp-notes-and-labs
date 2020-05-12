@@ -60,8 +60,8 @@
 */
 int howManyBits(int x) {
     int t=((x>>31)&1);
-
-    x=((((!t)<<31)>>31)&x)|(((t<<31)>>31)&~x);//conditional
+    int n,v0,v1,p0,p1,q0,q1,fac_1,fac_2,fac_3,fac_4,fac_5;
+    x=((((!t)<<31)>>31)&x)|(((t<<31)>>31)&~x);
 
     x=x|x>>1;
     x=x|x>>2;
@@ -69,22 +69,22 @@ int howManyBits(int x) {
     x=x|x>>8;
     x=x|x>>16;
 
-    int n=x;
-    int v0=0x55;
-    int v1=v0|(v0<<8);
-    int fac_1=v1|(v1<<16);
+    n=x;
+    v0=0x55;
+    v1=v0|(v0<<8);
+    fac_1=v1|(v1<<16);
 
-    int p0=0x33;
-    int p1=p0|(p0<<8);
-    int fac_2=p1|(p1<<16);
+    p0=0x33;
+    p1=p0|(p0<<8);
+    fac_2=p1|(p1<<16);
 
-    int q0=0x0f;
-    int q1=q0|(q0<<8);
-    int fac_3=q1|(q1<<16);
+    q0=0x0f;
+    q1=q0|(q0<<8);
+    fac_3=q1|(q1<<16);
 
-    int fac_4=0xff|(0xff<<16);
+    fac_4=0xff|(0xff<<16);
 
-    int fac_5=0xff|(0xff<<8);
+    fac_5=0xff|(0xff<<8);
 
     n=(n&fac_1)+((n>>1)&fac_1);
     n=(n&fac_2)+((n>>2)&fac_2);
@@ -92,5 +92,5 @@ int howManyBits(int x) {
     n=(n&fac_4)+((n>>8)&fac_4);
     n=(n&fac_5)+((n>>16)&fac_5);
 
-    return (n+1);
+    return (n+1);//ops 58
 }
