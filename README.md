@@ -16,7 +16,7 @@ data lab:
 | 3  | 3 | 0  | isLessOrEqual |
 | 4  | 4 | 0  | logicalNeg |
 | 4  | 4 | 0  | howManyBits | 
-| 0  | 4 | 1  | floatScale2 |
+| 4  | 4 | 0  | floatScale2 |
 | 0  | 4 | 1  | floatFloat2Int |
 | 0  | 4 | 1  | floatPower2 |
 
