@@ -10,5 +10,5 @@
  *   Max ops: 30
  *   Rating: 4
  */
- 
+
  
