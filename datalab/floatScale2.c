@@ -23,3 +23,13 @@
 
 *最大操作数：30 
 */
+unsigned floatScale2(unsigned uf) {
+    int test_0=uf<<1;
+    int e=(uf>>23)&0xff;
+    int sign=(uf>>31)&1;
+    if(!(test_0))   return uf;
+    if((!(~(e^(~0xff))))) return uf;
+    if(e)    return ((uf+(0x80<<16)));
+    return ((uf<<1)|(sign<<31));//ops 15
+}
+//注意Tmin/0,NaN,inf这几个特殊值的处理,以及normalized,denormalized的区分
