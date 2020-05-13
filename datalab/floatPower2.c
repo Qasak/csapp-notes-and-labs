@@ -16,5 +16,23 @@
     返回2.0的x次幂(x是32位整数)
     如果结果太小而不能表示为denorm,返回0
     如果太大,返回+inf
-
  */
+ 
+//这个版本if太多,被卡10s,TIME_OUT_LIMIT调到13s勉强能过
+unsigned floatPower2(int x) {
+    int t;
+    if(x>128) x=128;
+    if(x<=-150) x=-150;
+    t=(1<<7)-1;//exp=t-bias==127-127=0
+    t=t+x;
+    if(t<=0)
+    {
+        t=((1<<22)>>-t);
+    }
+    else
+    {
+
+        t=t<<23;
+    }
+    return t;
+}
