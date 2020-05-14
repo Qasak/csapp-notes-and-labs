@@ -78,7 +78,7 @@ jX跳转指令
 |jg|~(SF^OF)&~ZF|Greater(Signed)|
 |jge|~(SF^OF)|Greater or Equal(Signed)|
 |jl|(SF^OF)|Less(Signed)|
-|jle|(SF^OF)|ZF|Less or Equal(Signed)|
+|jle|(SF^OF)\|ZF|Less or Equal(Signed)|
 |ja|~CF&~ZF|Above(Unsigned)|
 |jb|CF|Below(Unsigned)|
 
