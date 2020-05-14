@@ -36,6 +36,7 @@ Condition Codes
 They are all one bit flags and they get set not directly, bute as side effect of other operations that take place.
 
 |CF|ZF|SF|OF|
+|  ----  | ----  |  ----  | ----  |
 |Carry Flag(for unsigned)进位标志|Zero Flag 刚刚计算的值是0|Sign Flag(for signed) 最高有效位是1|Overflow Flag(for signed)有符号数运算溢出|
 
 
@@ -57,6 +58,7 @@ jX跳转指令
 根据条件码跳转到代码的不同部分
 
 |jX|Condition|Description|
+|  ----  | ----  |  ----  | ----  |
 |jmp|1|Unconditional|
 |je|ZF||
 ||||
