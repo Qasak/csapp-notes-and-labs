@@ -20,6 +20,10 @@ CSAPP lab全部题解
 | 4  | 4 | 0  | floatFloat2Int |
 | 4  | 4 | 0  | floatPower2 |
 
+## bomb lab:
+
+
+
 > All solutions written by github user Qasak.
 
 > as O'Hallaron said, whatever you do, don't cheat.
