@@ -18,7 +18,7 @@ data lab:
 | 4  | 4 | 0  | howManyBits | 
 | 4  | 4 | 0  | floatScale2 |
 | 4  | 4 | 0  | floatFloat2Int |
-| 0  | 4 | 1  | floatPower2 |
+| 4  | 4 | 0  | floatPower2 |
 
 > All solutions written by github user Qasak.
 
