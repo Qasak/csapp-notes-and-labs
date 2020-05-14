@@ -56,7 +56,7 @@ SetX指令
 |setg|~(SF^OF)&~ZF|Greater(Signed)|
 |setge|~(SF^OF)|Greater or Equal(Signed)|
 |setl|(SF^OF)|Less(signed)|
-|setle|(SF^OF)\|ZF|Less or Equal(Signed)|
+|setle|(SF^OF)|ZF|Less or Equal(Signed)|
 |seta|~CF&~ZF|Above(unsigned)|
 |setb|CF|Below(unsigned)|
 
