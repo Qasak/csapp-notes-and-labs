@@ -24,7 +24,11 @@ CSAPP lab全部题解
 ### hint:
 `gdb`
 
+http://heather.cs.ucdavis.edu/~matloff/UnixAndC/CLanguage/Debug.html
+有一个非常方便的单页gdb摘要，您可以打印出来作为参考。下面是一些使用gdb的其他技巧。
 
+`汇编基础`
+[{"src":"xap:resources/f404c09e60d8ec51802961af4d7d0f025847b47535db2bed00b2f63b12ad1414.png"}]
 > All solutions written by github user Qasak.
 
 > as O'Hallaron said, whatever you do, don't cheat.
