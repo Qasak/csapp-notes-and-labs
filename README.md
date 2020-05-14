@@ -69,7 +69,7 @@ jX跳转指令
 根据条件码跳转到代码的不同部分
 
 |jX|Condition|Description|
-|  ----  | ----  |  ----  | ----  |
+|  ----  | ----  | ----  |
 |jmp|1|Unconditional|
 |je|ZF|Equal/Zero|
 |jne|~ZF|Not Equal/Zero|
