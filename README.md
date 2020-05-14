@@ -21,7 +21,7 @@ CSAPP lab全部题解
 | 4  | 4 | 0  | floatPower2 |
 
 ## bomb lab:
-
+https://polyarch.github.io/cs33/labs/lab2/
 
 
 > All solutions written by github user Qasak.
