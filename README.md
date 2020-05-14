@@ -47,7 +47,18 @@ SetX指令
 
 根据条件码设置低位字节为0或1
 
-|sete|||
+|SetX|Condition|Description|
+|  ----  | ----  |  ----  |
+|sete|ZF|Equal/Zero|
+|setne|~ZF|Not Equal/Not Zero|
+|sets|SF|Negative|
+|setns|~SF|Nonnegative|
+|setg|~(SF^OF)&~ZF|Greater(Signed)|
+|setge|~(SF^OF)|Greater or Equal(Signed)|
+|setl|(SF^OF)|Less(signed)|
+|setle|(SF^OF)\|ZF|Less or Equal(Signed)|
+|seta|~CF&~ZF|Above(unsigned)|
+|setb|CF|Below(unsigned)|
 
 
 
@@ -60,19 +71,16 @@ jX跳转指令
 |jX|Condition|Description|
 |  ----  | ----  |  ----  | ----  |
 |jmp|1|Unconditional|
-|je|ZF||
-||||
-||||
-||||
-||||
-||||
-||||
-||||
-||||
-||||
-||||
-||||
-||||
+|je|ZF|Equal/Zero|
+|jne|~ZF|Not Equal/Zero|
+|js|SF|Negative|
+|jns|~SF|Nonnegative|
+|jg|~(SF^OF)&~ZF|Greater(Signed)|
+|jge|~(SF^OF)|Greater or Equal(Signed)|
+|jl|(SF^OF)|Less(Signed)|
+|jle|(SF^OF)|ZF|Less or Equal(Signed)|
+|ja|~CF&~ZF|Above(Unsigned)|
+|jb|CF|Below(Unsigned)|
 
 > All solutions written by github user Qasak.
 
