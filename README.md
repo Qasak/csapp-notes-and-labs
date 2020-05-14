@@ -3,7 +3,7 @@ Solutions of Computer Systems: A Programmer's Perspective's labs
 
 CSAPP lab全部题解
 
-data lab:
+## data lab:
 | Score   | Rating  | Errors | Function|
 |  ----  | ----  |  ----  | ----  |
 | 1  | 1 | 0  | bitXor |
