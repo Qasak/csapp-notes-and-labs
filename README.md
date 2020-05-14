@@ -37,7 +37,7 @@ They are all one bit flags and they get set not directly, bute as side effect of
 
 |CF|ZF|SF|OF|
 |  ----  | ----  |  ----  | ----  |
-|Carry Flag(for unsigned)进位标志|Zero Flag 刚刚计算的值是0|Sign Flag(for signed) 最高有效位是1|Overflow Flag(for signed)有符号数运算溢出|
+|Carry Flag(for unsigned)<br>进位标志|Zero Flag <br>刚刚计算的值是0|Sign Flag(for signed) <br>最高有效位是1|Overflow Flag(for signed)<br>有符号数运算溢出|
 
 
 
