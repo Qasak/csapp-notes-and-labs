@@ -26,6 +26,19 @@ CSAPP lab全部题解
 
 ### bitXor
 
+
+
+```c
+/*
+ * bitXor - x^y using only ~ and &
+ *   Example: bitXor(4, 5) = 1
+ *   Legal ops: ~ &
+ *   Max ops: 14
+ *   Rating: 1
+ */
+ 
+
+/*
 两种解法：
 
 1.与非门实现异或门
@@ -39,19 +52,11 @@ CSAPP lab全部题解
 又 `a|b`可描述为`g=lambda a,b:~(~a&~b)`
 
 综上,`x^y=g(f(x,y),f(y,x))`
+*/
 
-```c
-/*
- * bitXor - x^y using only ~ and &
- *   Example: bitXor(4, 5) = 1
- *   Legal ops: ~ &
- *   Max ops: 14
- *   Rating: 1
- */
- 
 /*
     1)用与非门(NAND)实现异或门
- */
+*/
 int bitXor(int x, int y) {
     int nand0=(~(x&y));
     int nand1=(~(x&nand0));
@@ -111,10 +116,6 @@ int bitXor(int x,int y)
 ```
 
 ### isTmax
-
-判断有符号整数int是否是Tmax 0x7fffffff.
-
-这道题不能用移位运算符
 
 ```c
 /*
