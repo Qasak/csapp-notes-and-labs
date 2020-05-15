@@ -5,7 +5,7 @@ CSAPP lab全部题解
 
 > All solutions written by github user [Qasak](https://qasak.github.io/).    
 >
-> as O'Hallaron said, whatever you do, don't cheat.  
+> as [O'Hallaron](https://www.cs.cmu.edu/~droh/) said in 15-213 class, whatever you do, don't cheat.  
 > 
 
 ## data lab:
