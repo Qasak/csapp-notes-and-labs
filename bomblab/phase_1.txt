@@ -145,30 +145,5 @@
   4015bf:	48 83 c4 08          	add    $0x8,%rsp
   4015c3:	c3                   	retq    
   
-0000000000400b90 <signal@plt>:
-  400b90:	ff 25 c2 24 20 00    	jmpq   *0x2024c2(%rip)        # 603058 <signal@GLIBC_2.2.5>
-  400b96:	68 0b 00 00 00       	pushq  $0xb
-  400b9b:	e9 30 ff ff ff       	jmpq   400ad0 <.plt>
-
-
-00000000004012a0 <sig_handler>:
-  4012a0:	48 83 ec 08          	sub    $0x8,%rsp
-  4012a4:	bf c0 24 40 00       	mov    $0x4024c0,%edi
-  4012a9:	e8 62 f8 ff ff       	callq  400b10 <puts@plt>
-  4012ae:	bf 03 00 00 00       	mov    $0x3,%edi
-  4012b3:	e8 98 f9 ff ff       	callq  400c50 <sleep@plt>
-  4012b8:	be 82 25 40 00       	mov    $0x402582,%esi
-  4012bd:	bf 01 00 00 00       	mov    $0x1,%edi
-  4012c2:	b8 00 00 00 00       	mov    $0x0,%eax
-  4012c7:	e8 34 f9 ff ff       	callq  400c00 <__printf_chk@plt>
-  4012cc:	48 8b 3d 6d 24 20 00 	mov    0x20246d(%rip),%rdi        # 603740 <__bss_start>
-  4012d3:	e8 08 f9 ff ff       	callq  400be0 <fflush@plt>
-  4012d8:	bf 01 00 00 00       	mov    $0x1,%edi
-  4012dd:	e8 6e f9 ff ff       	callq  400c50 <sleep@plt>
-  4012e2:	bf 8a 25 40 00       	mov    $0x40258a,%edi
-  4012e7:	e8 24 f8 ff ff       	callq  400b10 <puts@plt>
-  4012ec:	bf 10 00 00 00       	mov    $0x10,%edi
-  4012f1:	e8 2a f9 ff ff       	callq  400c20 <exit@plt>
-  
   
   
