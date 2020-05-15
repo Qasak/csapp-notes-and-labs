@@ -2,6 +2,8 @@ This is an x86-64 bomb for self-study students.
 
 ## bomb lab:
 
+> 有人说：“我理解了一般规则，不愿意劳神去学习细节！”他们实际上是在自欺欺人。
+
 ### bomb
 
 bomb是一个二进制文件,不能直接查看
