@@ -205,8 +205,8 @@ bomb是一个二进制文件,不能直接查看
   400f29:	48 39 eb             	cmp    %rbp,%rbx 
   400f2c:	75 e9                	jne    400f17 <phase_2+0x1b> # if rbp!=rbx goto 400f17
   400f2e:	eb 0c                	jmp    400f3c <phase_2+0x40> # else goto 400f3c
-  400f30:	48 8d 5c 24 04       	lea    0x4(%rsp),%rbx # from 400f0e. rbx=*(rsp+4)
-  400f35:	48 8d 6c 24 18       	lea    0x18(%rsp),%rbp # rbp=*(rsp+20)
+  400f30:	48 8d 5c 24 04       	lea    0x4(%rsp),%rbx # from 400f0e. rbx=&rsp+4
+  400f35:	48 8d 6c 24 18       	lea    0x18(%rsp),%rbp # rbp=&rsp+20
   400f3a:	eb db                	jmp    400f17 <phase_2+0x1b> # goto 400f17
   400f3c:	48 83 c4 28          	add    $0x28,%rsp # rsp=0x28
   400f40:	5b                   	pop    %rbx
@@ -220,13 +220,13 @@ bomb是一个二进制文件,不能直接查看
 000000000040145c <read_six_numbers>:
   40145c:	48 83 ec 18          	sub    $0x18,%rsp #栈开了24bit/8=3byte的空间
   401460:	48 89 f2             	mov    %rsi,%rdx 
-  401463:	48 8d 4e 04          	lea    0x4(%rsi),%rcx # rcx=*(rsi+4)
-  401467:	48 8d 46 14          	lea    0x14(%rsi),%rax # rax=*(rsi+20)
+  401463:	48 8d 4e 04          	lea    0x4(%rsi),%rcx # rcx=&rsi+4
+  401467:	48 8d 46 14          	lea    0x14(%rsi),%rax # rax=&rsi+20
   40146b:	48 89 44 24 08       	mov    %rax,0x8(%rsp) # *(rsp+8)=rax
-  401470:	48 8d 46 10          	lea    0x10(%rsi),%rax # rax=*(rsi+16)
+  401470:	48 8d 46 10          	lea    0x10(%rsi),%rax # rax=&rsi+16
   401474:	48 89 04 24          	mov    %rax,(%rsp) # *(rsp)=rax
-  401478:	4c 8d 4e 0c          	lea    0xc(%rsi),%r9 # r9=*(rsi+12)
-  40147c:	4c 8d 46 08          	lea    0x8(%rsi),%r8 # r8=*(rsi+8)
+  401478:	4c 8d 4e 0c          	lea    0xc(%rsi),%r9 # r9=&rsi+12
+  40147c:	4c 8d 46 08          	lea    0x8(%rsi),%r8 # r8=&rsi+8
   401480:	be c3 25 40 00       	mov    $0x4025c3,%esi # esi=0x4023c3
   401485:	b8 00 00 00 00       	mov    $0x0,%eax # eax=0x0
   40148a:	e8 61 f7 ff ff       	callq  400bf0 <__isoc99_sscanf@plt>
