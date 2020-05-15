@@ -187,10 +187,10 @@ bomb是一个二进制文件,不能直接查看
 
 ```asm
 0000000000400efc <phase_2>:
-  400efc:	55                   	push   %rbp # M[rsp]=rbp
-  400efd:	53                   	push   %rbx # M[rsp]=rbx
-  400efe:	48 83 ec 28          	sub    $0x28,%rsp #栈开了0x28=40,40/8=5个字节的空间
-  400f02:	48 89 e6             	mov    %rsp,%rsi # 
+  400efc:	55                   	push   %rbp # M[R[rsp]]=R[rbp]
+  400efd:	53                   	push   %rbx # M[R[rsp]]=R[rbx]
+  400efe:	48 83 ec 28          	sub    $0x28,%rsp # R[rsp]<-R[rsp]-0x28.栈开了0x28=40,40/8=5个字的空间
+  400f02:	48 89 e6             	mov    %rsp,%rsi # R[rsi]=R[rsp],即R[rsi]存了当前栈顶地址
   400f05:	e8 52 05 00 00       	callq  40145c <read_six_numbers>
   400f0a:	83 3c 24 01          	cmpl   $0x1,(%rsp) 
   400f0e:	74 20                	je     400f30 <phase_2+0x34> # if *rsp==1 goto 400f30
@@ -218,8 +218,8 @@ bomb是一个二进制文件,不能直接查看
 
 ```asm
 000000000040145c <read_six_numbers>:
-  40145c:	48 83 ec 18          	sub    $0x18,%rsp #栈开了24bit/8=3byte的空间
-  401460:	48 89 f2             	mov    %rsi,%rdx 
+  40145c:	48 83 ec 18          	sub    $0x18,%rsp #栈开了24Byte/8=3字的空间
+  401460:	48 89 f2             	mov    %rsi,%rdx #R[rdx]=R[rsi]
   401463:	48 8d 4e 04          	lea    0x4(%rsi),%rcx # rcx=&rsi+4
   401467:	48 8d 46 14          	lea    0x14(%rsi),%rax # rax=&rsi+20
   40146b:	48 89 44 24 08       	mov    %rax,0x8(%rsp) # *(rsp+8)=rax
