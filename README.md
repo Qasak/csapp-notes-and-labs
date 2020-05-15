@@ -92,6 +92,68 @@ int bitXor(int x,int y)
     return ~((~((~x)&y))&(~((~y)&x)));
 }
 ```
+### tmin
+```c
+/*
+ * tmin - return minimum two's complement integer
+ *   Legal ops: ! ~ & ^ | + << >>
+ *   Max ops: 4
+ *   Rating: 1
+ */
+ int tmin(void) {
+    int ans=1<<31;
+    return ans;
+}
+```
+
+### isTmax
+
+判断有符号整数int是否是Tmax 0x7fffffff.
+
+这道题不能用移位运算符
+
+```c
+/*
+ * isTmax - returns 1 if x is the maximum, two's complement number,
+ *     and 0 otherwise
+ *   Legal ops: ! ~ & ^ | +
+ *   Max ops: 10
+ *   Rating: 1
+ */
+
+/*
+这道题不能用移位运算符
+    设x是Tmax,那么有t=x+1==Tmin.
+    t^x==1111 1111 1111 1111
+    !(~(t^x))==1
+    
+    满足(x+1)^x==1111 1111 1111 1111的x有且仅有两个
+    x==-1
+    x==0x7fffffff
+    
+    eg        x==1111 1111 1111 1111
+            x+1==0000 0000 0000 0000
+        x^(x+1)==1111 1111 1111 1111
+    
+    eg        x==0111 1111 1111 1111
+            x+1==1000 0000 0000 0000
+        x^(x+1)==1111 1111 1111 1111
+    
+    
+    eg        x==0011 1111 1111 1111
+            x+1==0100 0000 0000 0000
+        x^(x+1)==0111 1111 1111 1111
+        
+    eg        x==0001 1111 1111 1111
+            x+1==0010 0000 0000 0000
+        x^(x+1)==0011 1111 1111 1111  
+ */
+int isTmax(int x) {
+    int t=x+1;
+    return !((~(t^x))|!t);
+}
+```
+
 
 
 ## bomb lab:
