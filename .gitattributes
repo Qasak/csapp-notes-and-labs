@@ -1,2 +1,2 @@
 # Auto detect text files and perform LF normalization
-*.md linguist-language=c
+*.* linguist-language=c
