@@ -8,7 +8,7 @@ bomb是一个二进制文件,不能直接查看
 
 其对应的主流程[.c文件](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/bomb.c)
 
-`objdump -d bomb`反汇编得到解开谜题[所需的信息](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/bomb.d).
+`objdump -d bomb`反汇编得到解开谜题[所需的汇编代码信息](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/bomb.d).
 
 ### main
 
