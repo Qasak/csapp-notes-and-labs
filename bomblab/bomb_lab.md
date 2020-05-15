@@ -67,7 +67,7 @@ jX跳转指令
 
 ### phase_1
 
-```x86asm
+```asm
 0000000000400ee0 <phase_1>:
   400ee0:	48 83 ec 08          	sub    $0x8,%rsp
   400ee4:	be 00 24 40 00       	mov    $0x402400,%esi       
@@ -120,7 +120,7 @@ eg:
 
 ### phase_2
 
-```x86asm
+```asm
 0000000000400efc <phase_2>:
   400efc:	55                   	push   %rbp
   400efd:	53                   	push   %rbx
