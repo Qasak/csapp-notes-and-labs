@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 
 ```
 
-
+`objdump -d bomb`反汇编得到解开谜题所需的信息.
 
 
 
