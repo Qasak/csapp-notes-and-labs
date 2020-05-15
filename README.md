@@ -34,7 +34,7 @@ CSAPP lab全部题解
 
 又 `a|b`可描述为`g=lambda a,b:~(~a&~b)`
 
-综上,`x^y=g(f(a,b),f(b,a))`
+综上,`x^y=g(f(x,y),f(y,x))`
 
 ```c
 /*
