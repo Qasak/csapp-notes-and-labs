@@ -2,68 +2,6 @@ This is an x86-64 bomb for self-study students.
 
 ## bomb lab:
 
-### hint:
-
-`gdb`
-
-
-有一个非常方便的单页[gdb摘要](http://heather.cs.ucdavis.edu/~matloff/UnixAndC/CLanguage/Debug.html)
-
-`汇编基础`
-
-Condition Codes
-
-条件码
-
-They are all one bit flags and they get set not directly, bute as side effect of other operations that take place.
-
-| CF                                   | ZF                            | SF                                      | OF                                            |
-| ------------------------------------ | ----------------------------- | --------------------------------------- | --------------------------------------------- |
-| Carry Flag(for unsigned)<br>进位标志 | Zero Flag <br>刚刚计算的值是0 | Sign Flag(for signed) <br>最高有效位是1 | Overflow Flag(for signed)<br>有符号数运算溢出 |
-
-
-
-SetX Instructions
-
-SetX指令
-
-根据条件码设置低位字节为0或1
-
-| SetX  | Condition       | Description              |
-| ----- | --------------- | ------------------------ |
-| sete  | ZF              | Equal/Zero               |
-| setne | ~ZF             | Not Equal/Not Zero       |
-| sets  | SF              | Negative                 |
-| setns | ~SF             | Nonnegative              |
-| setg  | ~(SF^OF)&~ZF    | Greater(Signed)          |
-| setge | ~(SF^OF)        | Greater or Equal(Signed) |
-| setl  | (SF^OF)         | Less(signed)             |
-| setle | (SF^OF)&#124;ZF | Less or Equal(Signed)    |
-| seta  | ~CF&~ZF         | Above(unsigned)          |
-| setb  | CF              | Below(unsigned)          |
-
-
-
-jX Instructions
-
-jX跳转指令
-
-根据条件码跳转到代码的不同部分
-
-| jX   | Condition        | Description              |
-| ---- | ---------------- | ------------------------ |
-| jmp  | 1                | Unconditional            |
-| je   | ZF               | Equal/Zero               |
-| jne  | ~ZF              | Not Equal/Zero           |
-| js   | SF               | Negative                 |
-| jns  | ~SF              | Nonnegative              |
-| jg   | ~(SF^OF)&~ZF     | Greater(Signed)          |
-| jge  | ~(SF^OF)         | Greater or Equal(Signed) |
-| jl   | (SF^OF)          | Less(Signed)             |
-| jle  | (SF^OF) &#124;ZF | Less or Equal(Signed)    |
-| ja   | ~CF&~ZF          | Above(Unsigned)          |
-| jb   | CF               | Below(Unsigned)          |
-
 ### bomb主流程
 
 ```c
@@ -275,3 +213,64 @@ eg:
   400f42:	c3                   	retq   
 ```
 
+### hint:
+
+`gdb`
+
+
+有一个非常方便的单页[gdb摘要](http://heather.cs.ucdavis.edu/~matloff/UnixAndC/CLanguage/Debug.html)
+
+`汇编基础`
+
+Condition Codes
+
+条件码
+
+They are all one bit flags and they get set not directly, bute as side effect of other operations that take place.
+
+| CF                                   | ZF                            | SF                                      | OF                                            |
+| ------------------------------------ | ----------------------------- | --------------------------------------- | --------------------------------------------- |
+| Carry Flag(for unsigned)<br>进位标志 | Zero Flag <br>刚刚计算的值是0 | Sign Flag(for signed) <br>最高有效位是1 | Overflow Flag(for signed)<br>有符号数运算溢出 |
+
+
+
+SetX Instructions
+
+SetX指令
+
+根据条件码设置低位字节为0或1
+
+| SetX  | Condition       | Description              |
+| ----- | --------------- | ------------------------ |
+| sete  | ZF              | Equal/Zero               |
+| setne | ~ZF             | Not Equal/Not Zero       |
+| sets  | SF              | Negative                 |
+| setns | ~SF             | Nonnegative              |
+| setg  | ~(SF^OF)&~ZF    | Greater(Signed)          |
+| setge | ~(SF^OF)        | Greater or Equal(Signed) |
+| setl  | (SF^OF)         | Less(signed)             |
+| setle | (SF^OF)&#124;ZF | Less or Equal(Signed)    |
+| seta  | ~CF&~ZF         | Above(unsigned)          |
+| setb  | CF              | Below(unsigned)          |
+
+
+
+jX Instructions
+
+jX跳转指令
+
+根据条件码跳转到代码的不同部分
+
+| jX   | Condition        | Description              |
+| ---- | ---------------- | ------------------------ |
+| jmp  | 1                | Unconditional            |
+| je   | ZF               | Equal/Zero               |
+| jne  | ~ZF              | Not Equal/Zero           |
+| js   | SF               | Negative                 |
+| jns  | ~SF              | Nonnegative              |
+| jg   | ~(SF^OF)&~ZF     | Greater(Signed)          |
+| jge  | ~(SF^OF)         | Greater or Equal(Signed) |
+| jl   | (SF^OF)          | Less(Signed)             |
+| jle  | (SF^OF) &#124;ZF | Less or Equal(Signed)    |
+| ja   | ~CF&~ZF          | Above(Unsigned)          |
+| jb   | CF               | Below(Unsigned)          |
