@@ -65,7 +65,7 @@ jX跳转指令
 | jb   | CF               | Below(Unsigned)          |
 
 
-### phase1
+### phase_1
 
 ```x86asm
 0000000000400ee0 <phase_1>:
@@ -94,7 +94,7 @@ eg:
 
 x/128db 0x402400
 
-### phase2
+### phase_2
 
 ```x86asm
 0000000000400efc <phase_2>:
