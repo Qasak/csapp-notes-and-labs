@@ -3,6 +3,10 @@ Solutions of Computer Systems: A Programmer's Perspective's labs
 
 CSAPP lab全部题解
 
+> All solutions written by github user [Qasak](https://qasak.github.io/).
+> as O'Hallaron said, whatever you do, don't cheat.
+>
+
 ## data lab:
 | Score   | Rating  | Errors | Function|
 |  ----  | ----  |  ----  | ----  |
@@ -773,6 +777,3 @@ x/128db 0x402400
   400f42:	c3                   	retq   
 ```
 
-> All solutions written by github user Qasak.
-as O'Hallaron said, whatever you do, don't cheat.
-https://qasak.github.io/
