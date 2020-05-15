@@ -101,13 +101,25 @@ bomb是一个二进制文件,不能直接查看
 
 ### phase_1
 
-```asm
+先来看一下phase_1调用的上下文
 
-  400e19:	e8 84 05 00 00       	callq  4013a2 <initialize_bomb> #这里修改的寄存器值会在后面覆盖,所以这个初始化并没有什么用
+```asm
+  400e19:	e8 84 05 00 00       	callq  4013a2 <initialize_bomb>#这里修改的寄存器值会在后面覆盖,所以这个初始化并没有什么用
+  400e1e:	bf 38 23 40 00       	mov    $0x402338,%edi
+  400e23:	e8 e8 fc ff ff       	callq  400b10 <puts@plt>
+  400e28:	bf 78 23 40 00       	mov    $0x402378,%edi
+  400e2d:	e8 de fc ff ff       	callq  400b10 <puts@plt>
   400e32:	e8 67 06 00 00       	callq  40149e <read_line>
-  400e37:	48 89 c7             	mov    %rax,%rdi            #input在内存中的地址在rdi(第一个参数)
+  400e37:	48 89 c7             	mov    %rax,%rdi #input在内存中的地址在rdi(第一个参数)
   400e3a:	e8 a1 00 00 00       	callq  400ee0 <phase_1>
-  
+  400e3f:	e8 80 07 00 00       	callq  4015c4 <phase_defused>
+```
+
+
+
+再来看一下其中涉及的关键函数的汇编代码
+
+```asm
 00000000004013a2 <initialize_bomb>:
   4013a2:	48 83 ec 08          	sub    $0x8,%rsp
   4013a6:	be a0 12 40 00       	mov    $0x4012a0,%esi
@@ -177,9 +189,10 @@ bomb是一个二进制文件,不能直接查看
   40132e:	75 f3                	jne    401323 <string_length+0x8>
   401330:	f3 c3                	repz retq 
   401332:	b8 00 00 00 00       	mov    $0x0,%eax
-  401337:	c3                   	retq   
- 
+  401337:	c3                   	retq    
 ```
+
+
 
 注意到`phase_1()`函数中的
 
