@@ -22,6 +22,20 @@ CSAPP lab全部题解
 
 ### bitXor
 
+两种解法：
+
+1.与非门实现异或门
+
+2.观察到用&和~可以实现映射f=lambda x,y:~x&y
+
+f(a,b)即:在a和b的相同位上,将x为0且y为1的位置为1
+
+那么x^y可描述为f(a,b)|f(b,a)
+
+又 a|b可描述为g=lambda a,b:~(~a&~b)
+
+综上,x^y=g(f(a,b),f(b,a))
+
 ```c
 /*
  * bitXor - x^y using only ~ and &
