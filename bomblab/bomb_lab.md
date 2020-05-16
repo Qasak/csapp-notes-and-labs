@@ -229,8 +229,8 @@ bomb是一个二进制文件,不能直接查看
   40147c:	4c 8d 46 08          	lea    0x8(%rsi),%r8 # r8=&rsi+8
   401480:	be c3 25 40 00       	mov    $0x4025c3,%esi # esi=0x4023c3
   401485:	b8 00 00 00 00       	mov    $0x0,%eax # eax=0x0
-  40148a:	e8 61 f7 ff ff       	callq  400bf0 <__isoc99_sscanf@plt>
-  40148f:	83 f8 05             	cmp    $0x5,%eax # eax-5
+  40148a:	e8 61 f7 ff ff       	callq  400bf0 <__isoc99_sscanf@plt> #读字符串
+  40148f:	83 f8 05             	cmp    $0x5,%eax # eax-5,sscanf的返回值是有效字符数
   401492:	7f 05                	jg     401499 <read_six_numbers+0x3d> # eax>5 goto 401499
   401494:	e8 a1 ff ff ff       	callq  40143a <explode_bomb> # BOOM!
   401499:	48 83 c4 18          	add    $0x18,%rsp # rsp+=24
