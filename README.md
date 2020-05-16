@@ -11,7 +11,11 @@ CSAPP lab全部题解
 >
 > "We really believe that the material you learned this semester can have a really positive and long-lasting impact on your careers."
 
+## data_lab
+
 [data_lab](https://github.com/Qasak/all-about-csapp-labs/blob/master/datalab/data_lab.md)
+
+## bomb_lab
 
 [bomb_lab](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/bomb_lab.md)
 
