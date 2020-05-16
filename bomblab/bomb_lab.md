@@ -189,7 +189,7 @@ bomb是一个二进制文件,不能直接查看
 0000000000400efc <phase_2>:
   400efc:	55                   	push   %rbp # M[R[rsp]]=R[rbp]
   400efd:	53                   	push   %rbx # M[R[rsp]]=R[rbx]
-  400efe:	48 83 ec 28          	sub    $0x28,%rsp # R[rsp]<-R[rsp]-0x28.栈开了0x28=40,40/8=5个字的空间
+  400efe:	48 83 ec 28          	sub    $0x28,%rsp # R[rsp]<-R[rsp]-0x28.栈开了0x28=40Bytes,40/8=5个字的空间
   400f02:	48 89 e6             	mov    %rsp,%rsi # R[rsi]=R[rsp],即R[rsi]存了当前栈顶地址
   400f05:	e8 52 05 00 00       	callq  40145c <read_six_numbers>
   400f0a:	83 3c 24 01          	cmpl   $0x1,(%rsp) 
@@ -244,8 +244,9 @@ bomb是一个二进制文件,不能直接查看
 
 `gdb`
 
-
 有一个非常方便的单页[gdb摘要](http://heather.cs.ucdavis.edu/~matloff/UnixAndC/CLanguage/Debug.html)
+
+[x86-64 gdb总结](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/gdbnotes-x86-64.pdf)
 
 `汇编基础`
 
