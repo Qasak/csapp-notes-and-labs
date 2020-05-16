@@ -244,6 +244,10 @@ bomb是一个二进制文件,不能直接查看
 
 即为下方sscanf的格式,和函数名一样,是从%rdi指向的字符串读入六个整数.
 
+下面的图片可以很好的解释phase_2干了什么
+
+> 
+
 ![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/phase_2_stack.jpg)
 
 ### phase_3
@@ -354,3 +358,4 @@ jX跳转指令
 | jle  | (SF^OF) &#124;ZF | Less or Equal(Signed)    |
 | ja   | ~CF&~ZF          | Above(Unsigned)          |
 | jb   | CF               | Below(Unsigned)          |
+
