@@ -244,7 +244,7 @@ bomb是一个二进制文件,不能直接查看
 
 即为下方sscanf的格式,和函数名一样,是从%rdi指向的字符串读入六个整数.
 
-
+![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/phase_2_stack.jpg)
 
 
 
