@@ -246,9 +246,11 @@ bomb是一个二进制文件,不能直接查看
 
 下面的图片可以很好的解释phase_2干了什么
 
-> 
-
 ![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/phase_2_stack.jpg)
+
+`1 2 4 8 16 32`
+
+
 
 ### phase_3
 
@@ -264,9 +266,9 @@ bomb是一个二进制文件,不能直接查看
   400f63:	7f 05                	jg     400f6a <phase_3+0x27>
   400f65:	e8 d0 04 00 00       	callq  40143a <explode_bomb>
   400f6a:	83 7c 24 08 07       	cmpl   $0x7,0x8(%rsp)
-  400f6f:	77 3c                	ja     400fad <phase_3+0x6a>
+  400f6f:	77 3c                	ja     400fad <phase_3+0x6a> # Above (unsigned)  0,1,2,3,4,5,6,7
   400f71:	8b 44 24 08          	mov    0x8(%rsp),%eax
-  400f75:	ff 24 c5 70 24 40 00 	jmpq   *0x402470(,%rax,8)
+  400f75:	ff 24 c5 70 24 40 00 	jmpq   *0x402470(,%rax,8) # 跳转到绝对地址0x402470+%rax*8.跳转表,实现switch语句
   400f7c:	b8 cf 00 00 00       	mov    $0xcf,%eax
   400f81:	eb 3b                	jmp    400fbe <phase_3+0x7b>
   400f83:	b8 c3 02 00 00       	mov    $0x2c3,%eax
@@ -282,19 +284,32 @@ bomb是一个二进制文件,不能直接查看
   400fa6:	b8 47 01 00 00       	mov    $0x147,%eax
   400fab:	eb 11                	jmp    400fbe <phase_3+0x7b>
   400fad:	e8 88 04 00 00       	callq  40143a <explode_bomb>
-  400fb2:	b8 00 00 00 00       	mov    $0x0,%eax
+  400fb2:	b8 00 00 00 00       	mov    $0x0,%eax 
   400fb7:	eb 05                	jmp    400fbe <phase_3+0x7b>
-  400fb9:	b8 37 01 00 00       	mov    $0x137,%eax
-  400fbe:	3b 44 24 0c          	cmp    0xc(%rsp),%eax
+  400fb9:	b8 37 01 00 00       	mov    $0x137,%eax 
+  400fbe:	3b 44 24 0c          	cmp    0xc(%rsp),%eax # 第二个参数和不同的eax比较,若不同则Boom.
   400fc2:	74 05                	je     400fc9 <phase_3+0x86>
   400fc4:	e8 71 04 00 00       	callq  40143a <explode_bomb>
   400fc9:	48 83 c4 18          	add    $0x18,%rsp
   400fcd:	c3                   	retq   
 ```
 
+`0x4025cf`是`"%d %d"`,输入两个整数.
 
+`0x402470`内容如下
 
+```asm
+0x402470:       0x7c    0x0f    0x40    0x00    0x00    0x00    0x00    0x00
+0x402478:       0xb9    0x0f    0x40    0x00    0x00    0x00    0x00    0x00
+0x402480:       0x83    0x0f    0x40    0x00    0x00    0x00    0x00    0x00
+0x402488:       0x8a    0x0f    0x40    0x00    0x00    0x00    0x00    0x00
+0x402490:       0x91    0x0f    0x40    0x00    0x00    0x00    0x00    0x00
+0x402498:       0x98    0x0f    0x40    0x00    0x00    0x00    0x00    0x00
+0x4024a0:       0x9f    0x0f    0x40    0x00    0x00    0x00    0x00    0x00
+0x4024a8:       0xa6    0x0f    0x40    0x00    0x00    0x00    0x00    0x00
+```
 
+发现这是一个switch语句的跳转表
 
 ### hint:
 
