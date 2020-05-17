@@ -356,12 +356,12 @@ case 7:400fa6
 ```asm
 0000000000400fce <func4>:
   400fce:	48 83 ec 08          	sub    $0x8,%rsp
-  400fd2:	89 d0                	mov    %edx,%eax # eax=edx
-  400fd4:	29 f0                	sub    %esi,%eax # eax-=esi
-  400fd6:	89 c1                	mov    %eax,%ecx # ecx=eax
-  400fd8:	c1 e9 1f             	shr    $0x1f,%ecx # ecx=0x1f>>>ecx
+  400fd2:	89 d0                	mov    %edx,%eax # eax=0xe
+  400fd4:	29 f0                	sub    %esi,%eax # eax=2-0
+  400fd6:	89 c1                	mov    %eax,%ecx # ecx=0xe
+  400fd8:	c1 e9 1f             	shr    $0x1f,%ecx # ecx=0x1f>>>ecx;shr k,D D=D>>k
   400fdb:	01 c8                	add    %ecx,%eax # eax=ecx+eax
-  400fdd:	d1 f8                	sar    %eax # 算数右移shift arithmetic right (shr逻辑右移) 右移一位的简写
+  400fdd:	d1 f8                	sar    %eax # 算数右移shift arithmetic right (shr逻辑右移) 右移一位的简写.sar %eax = sar $1, %eax
   400fdf:	8d 0c 30             	lea    (%rax,%rsi,1),%ecx # ecx=rax+rsi
   400fe2:	39 f9                	cmp    %edi,%ecx # ecx<=edi
   400fe4:	7e 0c                	jle    400ff2 <func4+0x24> # 一定要到这
