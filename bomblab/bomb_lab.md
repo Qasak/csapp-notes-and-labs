@@ -309,7 +309,26 @@ bomb是一个二进制文件,不能直接查看
 0x4024a8:       0xa6    0x0f    0x40    0x00    0x00    0x00    0x00    0x00
 ```
 
-发现这是一个switch语句的跳转表
+发现这是一个switch语句的跳转表,应该是分别跳转到
+
+```asm
+case 0:400f7c	$0xcf,%eax
+case 1:400fb9
+case 2:400f83
+case 3:400f8a
+case 4:400f91
+case 5:400f98
+case 6:400f9f
+case 7:400fa6
+```
+
+0 207
+
+
+
+
+
+
 
 ### hint:
 
