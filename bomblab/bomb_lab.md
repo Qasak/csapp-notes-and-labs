@@ -335,13 +335,13 @@ case 7:400fa6
   40101f:	b8 00 00 00 00       	mov    $0x0,%eax
   401024:	e8 c7 fb ff ff       	callq  400bf0 <__isoc99_sscanf@plt>
   401029:	83 f8 02             	cmp    $0x2,%eax
-  40102c:	75 07                	jne    401035 <phase_4+0x29> # 输入两个参数
-  40102e:	83 7c 24 08 0e       	cmpl   $0xe,0x8(%rsp)
-  401033:	76 05                	jbe    40103a <phase_4+0x2e> # 第一个参数<=0xe(unsigned)
+  40102c:	75 07                	jne    401035 <phase_4+0x29> # 输入两个参数 rdx,rcx
+  40102e:	83 7c 24 08 0e       	cmpl   $0xe,0x8(%rsp) # 14
+  401033:	76 05                	jbe    40103a <phase_4+0x2e> # 第一个参数rdx<=0xe(unsigned)
   401035:	e8 00 04 00 00       	callq  40143a <explode_bomb>
-  40103a:	ba 0e 00 00 00       	mov    $0xe,%edx # 
-  40103f:	be 00 00 00 00       	mov    $0x0,%esi # 
-  401044:	8b 7c 24 08          	mov    0x8(%rsp),%edi # 
+  40103a:	ba 0e 00 00 00       	mov    $0xe,%edx # edx=0xe
+  40103f:	be 00 00 00 00       	mov    $0x0,%esi # esi=0
+  401044:	8b 7c 24 08          	mov    0x8(%rsp),%edi # edi=第一个参数
   401048:	e8 81 ff ff ff       	callq  400fce <func4>
   40104d:	85 c0                	test   %eax,%eax
   40104f:	75 07                	jne    401058 <phase_4+0x4c> # func4返回值==0
@@ -372,13 +372,17 @@ case 7:400fa6
   400ff2:	b8 00 00 00 00       	mov    $0x0,%eax # eax=0
   400ff7:	39 f9                	cmp    %edi,%ecx
   400ff9:	7d 0c                	jge    401007 <func4+0x39> # ecx>=edi 结束递归 且 eax=0
-  400ffb:	8d 71 01             	lea    0x1(%rcx),%esi #
+  400ffb:	8d 71 01             	lea    0x1(%rcx),%esi # 
   400ffe:	e8 cb ff ff ff       	callq  400fce <func4> # 递归
   401003:	8d 44 00 01          	lea    0x1(%rax,%rax,1),%eax # eax=2*rax+1
   401007:	48 83 c4 08          	add    $0x8,%rsp
   40100b:	c3                   	retq   
 
 ```
+
+first 6 arguments
+
+`%rdi %rsi %rdx %rcx %r8 %r9 `
 
 
 
