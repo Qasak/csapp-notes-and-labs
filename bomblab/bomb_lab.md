@@ -359,20 +359,20 @@ case 7:400fa6
   400fd2:	89 d0                	mov    %edx,%eax # eax=0xe
   400fd4:	29 f0                	sub    %esi,%eax # eax=2-0
   400fd6:	89 c1                	mov    %eax,%ecx # ecx=0xe
-  400fd8:	c1 e9 1f             	shr    $0x1f,%ecx # ecx=0x1f>>>ecx;shr k,D D=D>>k
+  400fd8:	c1 e9 1f             	shr    $0x1f,%ecx # ecx=ecx>>>0x1f;shr k,D D=D>>k
   400fdb:	01 c8                	add    %ecx,%eax # eax=ecx+eax
   400fdd:	d1 f8                	sar    %eax # 算数右移shift arithmetic right (shr逻辑右移) 右移一位的简写.sar %eax = sar $1, %eax
   400fdf:	8d 0c 30             	lea    (%rax,%rsi,1),%ecx # ecx=rax+rsi
   400fe2:	39 f9                	cmp    %edi,%ecx # ecx<=edi
   400fe4:	7e 0c                	jle    400ff2 <func4+0x24> # 一定要到这
-  400fe6:	8d 51 ff             	lea    -0x1(%rcx),%edx
+  400fe6:	8d 51 ff             	lea    -0x1(%rcx),%edx # edx=rcx-1
   400fe9:	e8 e0 ff ff ff       	callq  400fce <func4> # 递归
   400fee:	01 c0                	add    %eax,%eax # eax*=2
   400ff0:	eb 15                	jmp    401007 <func4+0x39> # 结束递归
   400ff2:	b8 00 00 00 00       	mov    $0x0,%eax # eax=0
   400ff7:	39 f9                	cmp    %edi,%ecx
-  400ff9:	7d 0c                	jge    401007 <func4+0x39> # ecx>=edi 结束递归 且 eax=0
-  400ffb:	8d 71 01             	lea    0x1(%rcx),%esi # 
+  400ff9:	7d 0c                	jge    401007 <func4+0x39> # ecx>=edi 结束递归 且 eax=0. 直到ecx==edi
+  400ffb:	8d 71 01             	lea    0x1(%rcx),%esi # esi=rcx+1
   400ffe:	e8 cb ff ff ff       	callq  400fce <func4> # 递归
   401003:	8d 44 00 01          	lea    0x1(%rax,%rax,1),%eax # eax=2*rax+1
   401007:	48 83 c4 08          	add    $0x8,%rsp
