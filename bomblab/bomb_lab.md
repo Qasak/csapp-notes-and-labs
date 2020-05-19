@@ -322,7 +322,7 @@ case 6:400f9f
 case 7:400fa6
 ```
 
-0 207
+`0 207`
 
 ### phase_4
 
@@ -330,25 +330,25 @@ case 7:400fa6
 000000000040100c <phase_4>:
   40100c:	48 83 ec 18          	sub    $0x18,%rsp
   401010:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx
-  401015:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx
-  40101a:	be cf 25 40 00       	mov    $0x4025cf,%esi # 输入两个参数
+  401015:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx # 因为后面要用到rcx rdx 所以先把值保存
+  40101a:	be cf 25 40 00       	mov    $0x4025cf,%esi # 输入两个整数到rdx,rcx
   40101f:	b8 00 00 00 00       	mov    $0x0,%eax
   401024:	e8 c7 fb ff ff       	callq  400bf0 <__isoc99_sscanf@plt>
   401029:	83 f8 02             	cmp    $0x2,%eax
   40102c:	75 07                	jne    401035 <phase_4+0x29> # 输入两个参数 rdx,rcx
-  40102e:	83 7c 24 08 0e       	cmpl   $0xe,0x8(%rsp) # 14
-  401033:	76 05                	jbe    40103a <phase_4+0x2e> # 第一个参数rdx<=0xe(unsigned)
+  40102e:	83 7c 24 08 0e       	cmpl   $0xe,0x8(%rsp) # 置第一个参数为e
+  401033:	76 05                	jbe    40103a <phase_4+0x2e> # 第一个参数必须满足rdx<=0xe(unsigned),否则BOOM
   401035:	e8 00 04 00 00       	callq  40143a <explode_bomb>
   40103a:	ba 0e 00 00 00       	mov    $0xe,%edx # edx=0xe
   40103f:	be 00 00 00 00       	mov    $0x0,%esi # esi=0
   401044:	8b 7c 24 08          	mov    0x8(%rsp),%edi # edi=第一个参数
   401048:	e8 81 ff ff ff       	callq  400fce <func4>
   40104d:	85 c0                	test   %eax,%eax
-  40104f:	75 07                	jne    401058 <phase_4+0x4c> # func4返回值==0
-  401051:	83 7c 24 0c 00       	cmpl   $0x0,0xc(%rsp) # 第二个参数==0
+  40104f:	75 07                	jne    401058 <phase_4+0x4c> # func4返回值!=0:BOOM
+  401051:	83 7c 24 0c 00       	cmpl   $0x0,0xc(%rsp) # 如果第二个参数==0,成功
   401056:	74 05                	je     40105d <phase_4+0x51>
   401058:	e8 dd 03 00 00       	callq  40143a <explode_bomb>
-  40105d:	48 83 c4 18          	add    $0x18,%rsp
+  40105d:	48 83 c4 18          	add    $0x18,%rsp # 成功:func4返回0且第二个参数==0
   401061:	c3                   	retq   
 
 ```
@@ -357,10 +357,11 @@ case 7:400fa6
 0000000000400fce <func4>:
   400fce:	48 83 ec 08          	sub    $0x8,%rsp
   400fd2:	89 d0                	mov    %edx,%eax # eax=0xe
-  400fd4:	29 f0                	sub    %esi,%eax # eax=2-0
+  400fd4:	29 f0                	sub    %esi,%eax # eax=0xe-esi(0)
   400fd6:	89 c1                	mov    %eax,%ecx # ecx=0xe
-  400fd8:	c1 e9 1f             	shr    $0x1f,%ecx # ecx=ecx>>>0x1f;shr k,D D=D>>k
-  400fdb:	01 c8                	add    %ecx,%eax # eax=ecx+eax
+  # 三个参数edx ecx esi;esi初始值=0
+  400fd8:	c1 e9 1f             	shr    $0x1f,%ecx # ecx=ecx>>>0x1f;shr k,D D=D>>k.ecx右移31位,是eax的符号位
+  400fdb:	01 c8                	add    %ecx,%eax # eax=ecx+eax eax+0or+1
   400fdd:	d1 f8                	sar    %eax # 算数右移shift arithmetic right (shr逻辑右移) 右移一位的简写.sar %eax = sar $1, %eax
   400fdf:	8d 0c 30             	lea    (%rax,%rsi,1),%ecx # ecx=rax+rsi
   400fe2:	39 f9                	cmp    %edi,%ecx # ecx<=edi
