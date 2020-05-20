@@ -330,16 +330,16 @@ case 7:400fa6
 000000000040100c <phase_4>:
   40100c:	48 83 ec 18          	sub    $0x18,%rsp
   401010:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx
-  401015:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx # 因为后面要用到rcx rdx 所以先把值保存
+  401015:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx # sscanf要存入的地址
   40101a:	be cf 25 40 00       	mov    $0x4025cf,%esi # 输入两个整数到rdx,rcx
   40101f:	b8 00 00 00 00       	mov    $0x0,%eax
   401024:	e8 c7 fb ff ff       	callq  400bf0 <__isoc99_sscanf@plt>
   401029:	83 f8 02             	cmp    $0x2,%eax
   40102c:	75 07                	jne    401035 <phase_4+0x29> # 输入两个参数 rdx,rcx
-  40102e:	83 7c 24 08 0e       	cmpl   $0xe,0x8(%rsp) # 置第一个参数为e
+  40102e:	83 7c 24 08 0e       	cmpl   $0xe,0x8(%rsp) 
   401033:	76 05                	jbe    40103a <phase_4+0x2e> # 第一个参数必须满足rdx<=0xe(unsigned),否则BOOM
   401035:	e8 00 04 00 00       	callq  40143a <explode_bomb>
-  40103a:	ba 0e 00 00 00       	mov    $0xe,%edx # edx=0xe
+  40103a:	ba 0e 00 00 00       	mov    $0xe,%edx # edx=0xe# 置第一个参数为e
   40103f:	be 00 00 00 00       	mov    $0x0,%esi # esi=0
   401044:	8b 7c 24 08          	mov    0x8(%rsp),%edi # edi=第一个参数
   401048:	e8 81 ff ff ff       	callq  400fce <func4>
@@ -364,7 +364,7 @@ case 7:400fa6
   400fdb:	01 c8                	add    %ecx,%eax # eax=ecx+eax eax+0or+1
   400fdd:	d1 f8                	sar    %eax # 算数右移shift arithmetic right (shr逻辑右移) 右移一位的简写.sar %eax = sar $1, %eax
   400fdf:	8d 0c 30             	lea    (%rax,%rsi,1),%ecx # ecx=rax+rsi
-  400fe2:	39 f9                	cmp    %edi,%ecx # ecx<=edi
+  400fe2:	39 f9                	cmp    %edi,%ecx # ecx<=edi;edi是第一个参数
   400fe4:	7e 0c                	jle    400ff2 <func4+0x24> # 一定要到这
   400fe6:	8d 51 ff             	lea    -0x1(%rcx),%edx # edx=rcx-1
   400fe9:	e8 e0 ff ff ff       	callq  400fce <func4> # 递归
@@ -383,9 +383,9 @@ case 7:400fa6
 
 first 6 arguments
 
-`%rdi %rsi %rdx %rcx %r8 %r9 `
+`%rdi %rsi %rdx %rcx %r8 %r9 `不必假设保存值可随意使用
 
-
+scanf把读取的值按顺序放入上面的寄存器指向的地址
 
 
 
