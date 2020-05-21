@@ -364,7 +364,7 @@ case 7:400fa6
   400fdb:	01 c8                	add    %ecx,%eax # eax=ecx+eax eax+0or+1
   400fdd:	d1 f8                	sar    %eax # 算数右移shift arithmetic right  右移一位的简写.sar %eax = sar $1, %eax
   400fdf:	8d 0c 30             	lea    (%rax,%rsi,1),%ecx # ecx=rax+rsi
-  400fe2:	39 f9                	cmp    %edi,%ecx # ecx<=edi;edi是第一个参数
+  400fe2:	39 f9                	cmp    %edi,%ecx # ecx<=edi
   400fe4:	7e 0c                	jle    400ff2 <func4+0x24> # 一定要到这
   400fe6:	8d 51 ff             	lea    -0x1(%rcx),%edx # edx=rcx-1
   400fe9:	e8 e0 ff ff ff       	callq  400fce <func4> # 递归
