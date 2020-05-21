@@ -339,7 +339,7 @@ case 7:400fa6
   40102e:	83 7c 24 08 0e       	cmpl   $0xe,0x8(%rsp) 
   401033:	76 05                	jbe    40103a <phase_4+0x2e> # 第一个参数必须满足rdx<=0xe(unsigned),否则BOOM
   401035:	e8 00 04 00 00       	callq  40143a <explode_bomb>
-  40103a:	ba 0e 00 00 00       	mov    $0xe,%edx # edx=0xe# 置第一个参数为e
+  40103a:	ba 0e 00 00 00       	mov    $0xe,%edx # edx=0xe# 置edx为e
   40103f:	be 00 00 00 00       	mov    $0x0,%esi # esi=0
   401044:	8b 7c 24 08          	mov    0x8(%rsp),%edi # edi=第一个参数
   401048:	e8 81 ff ff ff       	callq  400fce <func4>
