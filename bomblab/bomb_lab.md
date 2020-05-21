@@ -360,9 +360,9 @@ case 7:400fa6
   400fd4:	29 f0                	sub    %esi,%eax # eax=0xe-esi(0)
   400fd6:	89 c1                	mov    %eax,%ecx # ecx=0xe
   # 三个参数edx ecx esi;esi初始值=0
-  400fd8:	c1 e9 1f             	shr    $0x1f,%ecx # ecx=ecx>>>0x1f;shr k,D D=D>>k.ecx右移31位,是eax的符号位
+  400fd8:	c1 e9 1f             	shr    $0x1f,%ecx # ecx=ecx>>>0x1f;shr k,D D=D>>k.ecx右移31位,是eax的符号位(shr逻辑右移)
   400fdb:	01 c8                	add    %ecx,%eax # eax=ecx+eax eax+0or+1
-  400fdd:	d1 f8                	sar    %eax # 算数右移shift arithmetic right (shr逻辑右移) 右移一位的简写.sar %eax = sar $1, %eax
+  400fdd:	d1 f8                	sar    %eax # 算数右移shift arithmetic right  右移一位的简写.sar %eax = sar $1, %eax
   400fdf:	8d 0c 30             	lea    (%rax,%rsi,1),%ecx # ecx=rax+rsi
   400fe2:	39 f9                	cmp    %edi,%ecx # ecx<=edi;edi是第一个参数
   400fe4:	7e 0c                	jle    400ff2 <func4+0x24> # 一定要到这
