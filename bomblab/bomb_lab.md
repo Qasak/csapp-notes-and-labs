@@ -385,7 +385,17 @@ first 6 arguments
 
 `%rdi %rsi %rdx %rcx %r8 %r9 `不必假设保存值可随意使用
 
+```c
+int sscanf(     const char *buffer,     const char *format, [ argument ] ...   ); 
+```
+
 scanf把读取的值按顺序放入上面的寄存器指向的地址
+
+rdi:&buffer
+
+rsi:&format
+
+rdx,rcx,r8,r9:待输入的变量的地址
 
 
 
