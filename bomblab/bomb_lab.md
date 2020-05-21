@@ -342,7 +342,7 @@ case 7:400fa6
   40103a:	ba 0e 00 00 00       	mov    $0xe,%edx # edx=0xe# 置edx为e
   40103f:	be 00 00 00 00       	mov    $0x0,%esi # esi=0
   401044:	8b 7c 24 08          	mov    0x8(%rsp),%edi # edi=第一个参数
-  401048:	e8 81 ff ff ff       	callq  400fce <func4>
+  401048:	e8 81 ff ff ff       	callq  400fce <func4> # 调用前初始化了rdx rsi rdi 前三个参数寄存器
   40104d:	85 c0                	test   %eax,%eax
   40104f:	75 07                	jne    401058 <phase_4+0x4c> # func4返回值!=0:BOOM
   401051:	83 7c 24 0c 00       	cmpl   $0x0,0xc(%rsp) # 如果第二个参数==0,成功
