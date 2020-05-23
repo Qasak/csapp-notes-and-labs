@@ -11,11 +11,11 @@ CSAPP lab全部题解
 
 ## data_lab
 
-[data_lab](https://github.com/Qasak/all-about-csapp-labs/blob/master/datalab/data_lab.md)
+[data_lab](https://github.com/Qasak/all-about-csapp-labs/blob/master/datalab/README.md)
 
 ## bomb_lab
 
-[bomb_lab](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/bomb_lab.md)
+[bomb_lab](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/README.md)
 
 ## attack_lab
 
