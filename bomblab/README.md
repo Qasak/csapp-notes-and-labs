@@ -414,7 +414,7 @@ x		0		0xe		7		7
 ```asm
 0000000000401062 <phase_5>:
   401062:	53                   	push   %rbx
-  401063:	48 83 ec 20          	sub    $0x20,%rsp
+  401063:	48 83 ec 20          	sub    $0x20,%rsp #stack往下拉四个字
   401067:	48 89 fb             	mov    %rdi,%rbx
   40106a:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
   401071:	00 00 
@@ -425,7 +425,7 @@ x		0		0xe		7		7
   401082:	74 4e                	je     4010d2 <phase_5+0x70>
   401084:	e8 b1 03 00 00       	callq  40143a <explode_bomb>
   401089:	eb 47                	jmp    4010d2 <phase_5+0x70>
-  40108b:	0f b6 0c 03          	movzbl (%rbx,%rax,1),%ecx
+  40108b:	0f b6 0c 03          	movzbl (%rbx,%rax,1),%ecx # ecx=rbx+rax
   40108f:	88 0c 24             	mov    %cl,(%rsp)
   401092:	48 8b 14 24          	mov    (%rsp),%rdx
   401096:	83 e2 0f             	and    $0xf,%edx
@@ -433,7 +433,7 @@ x		0		0xe		7		7
   4010a0:	88 54 04 10          	mov    %dl,0x10(%rsp,%rax,1)
   4010a4:	48 83 c0 01          	add    $0x1,%rax
   4010a8:	48 83 f8 06          	cmp    $0x6,%rax
-  4010ac:	75 dd                	jne    40108b <phase_5+0x29>
+  4010ac:	75 dd                	jne    40108b <phase_5+0x29># 循环0~5，6次
   4010ae:	c6 44 24 16 00       	movb   $0x0,0x16(%rsp)
   4010b3:	be 5e 24 40 00       	mov    $0x40245e,%esi
   4010b8:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi
@@ -453,6 +453,11 @@ x		0		0xe		7		7
   4010ee:	48 83 c4 20          	add    $0x20,%rsp
   4010f2:	5b                   	pop    %rbx
   4010f3:	c3                   	retq   
+```
+
+```asm
+0x4024b0 <array.3449>:  0x6d    0x61    0x64    0x75    0x69    0x65    0x72    0x73
+0x4024b8 <array.3449+8>:  0x6e    0x66    0x6f    0x74    0x76    0x62    0x79    0x6c
 ```
 
 
