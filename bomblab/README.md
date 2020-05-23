@@ -427,7 +427,7 @@ x		0		0xe		7		7
   401089:	eb 47                	jmp    4010d2 <phase_5+0x70>
   #------------------------------------------------------------------
   40108b:	0f b6 0c 03          	movzbl (%rbx,%rax,1),%ecx # ecx=rbx+rax
-  40108f:	88 0c 24             	mov    %cl,(%rsp)
+  40108f:	88 0c 24             	mov    %cl,(%rsp)# cl:rcx的最低一位字节
   401092:	48 8b 14 24          	mov    (%rsp),%rdx
   401096:	83 e2 0f             	and    $0xf,%edx
   401099:	0f b6 92 b0 24 40 00 	movzbl 0x4024b0(%rdx),%edx
@@ -462,6 +462,10 @@ x		0		0xe		7		7
 0x4024b8 <array.3449+8>:  0x6e    0x66    0x6f    0x74    0x76    0x62    0x79    0x6c
 ```
 
+`maduiersnfotvbyl`
+
+
+
 
 
 `rsi=0x40245e`=>
@@ -474,7 +478,19 @@ x		0		0xe		7		7
 
 
 
+那么上面的下标对应应该为：
 
+`9 15 14 5 6 7 `
+
+又因为
+
+```asm
+  401096:	83 e2 0f             	and    $0xf,%edx
+```
+
+
+
+`ionefg`
 
 ### hint:
 
