@@ -437,7 +437,7 @@ x		0		0xe		7		7
   4010ae:	c6 44 24 16 00       	movb   $0x0,0x16(%rsp)
   4010b3:	be 5e 24 40 00       	mov    $0x40245e,%esi
   4010b8:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi
-  4010bd:	e8 76 02 00 00       	callq  401338 <strings_not_equal>
+  4010bd:	e8 76 02 00 00       	callq  401338 <strings_not_equal># 参数:rdi/rsi
   4010c2:	85 c0                	test   %eax,%eax
   4010c4:	74 13                	je     4010d9 <phase_5+0x77>
   4010c6:	e8 6f 03 00 00       	callq  40143a <explode_bomb>
