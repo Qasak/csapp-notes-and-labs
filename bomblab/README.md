@@ -625,6 +625,8 @@ x		0		0xe		7		7
 0x603348 <host_table+8>:        0x43    0x26    0x40    0x00    0x00    0x00    0x00    0x00
 ```
 
+![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/phase_6_stack.png)
+
 
 
 
@@ -700,8 +702,6 @@ x		0		0xe		7		7
 ```
 
 
-
-![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/phase_6_stack.png)
 
 
 
