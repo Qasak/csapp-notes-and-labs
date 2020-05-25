@@ -499,7 +499,7 @@ x		0		0xe		7		7
   4010f8:	41 54                	push   %r12
   4010fa:	55                   	push   %rbp
   4010fb:	53                   	push   %rbx
-  4010fc:	48 83 ec 50          	sub    $0x50,%rsp#开了100个字
+  4010fc:	48 83 ec 50          	sub    $0x50,%rsp#开了10个字
   401100:	49 89 e5             	mov    %rsp,%r13
   401103:	48 89 e6             	mov    %rsp,%rsi
   401106:	e8 51 03 00 00       	callq  40145c <read_six_numbers>
