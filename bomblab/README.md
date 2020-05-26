@@ -576,6 +576,8 @@ x		0		0xe		7		7
   4011ba:	48 89 d9             	mov    %rbx,%rcx# rcx=rsp+0x20
   #>from 4011d0，变动寄存器：rdx rcx rax 
   4011bd:	48 8b 10             	mov    (%rax),%rdx# rdx=第二个数地址的值
+  # eg:input: 6 5 4 3 2 1;
+  # rdx=
   4011c0:	48 89 51 08          	mov    %rdx,0x8(%rcx)# 
   4011c4:	48 83 c0 08          	add    $0x8,%rax
   4011c8:	48 39 f0             	cmp    %rsi,%rax# rax一个字一个字地加到0x50
@@ -626,6 +628,8 @@ x		0		0xe		7		7
 ```
 
 ![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/bomblab/phase_6_stack.png)
+
+`4 3 2 1 6 5`
 
 
 
