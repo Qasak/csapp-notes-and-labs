@@ -106,6 +106,8 @@ char* gets(char* dest)
         *p++=c;//priority:++(x) > *x > (x)++,*p++ means(*p)++
         c=getchar();
     }
+    *p='\0';
+    return dest;
 }
 ```
 
