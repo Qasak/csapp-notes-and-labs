@@ -82,6 +82,33 @@ void touch1()
 
 ```
 
+```asm
+
+00000000004017a8 <getbuf>:
+  4017a8:	48 83 ec 28          	sub    $0x28,%rsp# 5个字,40字节的buffer
+  4017ac:	48 89 e7             	mov    %rsp,%rdi
+  4017af:	e8 8c 02 00 00       	callq  401a40 <Gets>
+  4017b4:	b8 01 00 00 00       	mov    $0x1,%eax
+  4017b9:	48 83 c4 28          	add    $0x28,%rsp
+  4017bd:	c3                   	retq   
+  4017be:	90                   	nop
+  4017bf:	90                   	nop
+
+```
+
+```c
+char* gets(char* dest)
+{
+    int c=getchar();
+    char* p=dest;
+    while(c!=EOF&&c!='\n')
+    {
+        *p++=c;//priority:++(x) > *x > (x)++,*p++ means(*p)++
+        c=getchar();
+    }
+}
+```
+
 
 
 ```asm
