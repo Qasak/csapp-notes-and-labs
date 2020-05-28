@@ -130,6 +130,8 @@ char* gets(char* dest)
 
 ### Level 2
 
+第2阶段将注入少量代码作为攻击字符串的一部分。在ctarget中，有一个函数touch2的代码，具有以下C表示：
+
 ```c
 void touch2(unsigned val)
 {
@@ -285,20 +287,6 @@ void touch3(char* sval)
 }
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
