@@ -213,7 +213,9 @@ void touch2(unsigned val)
 
 `&touch2:4017ec`
 
-`mov (cookie) rdi; push $touch2; ret; `
+要做的：
+
+`mov (cookie) %rdi; mov &touch2 (%rsp); ret; `
 
 
 
