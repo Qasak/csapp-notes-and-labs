@@ -264,7 +264,8 @@ int hexmatch(unsigned val, char *sval)
     char cbuf[110];
     //Make position of check string unpredictable
     char *s=cbuf+random()%100;
-    sprintf(s,"%.8x",val);
+    //0x59b997fa -> '5''9''b''9''9''7''f''a'4个byte变成了8个byte
+    sprintf(s,"%.8x",val);//把16进制的每一个字符转成了对应的ascii码，8个char
     return strncmp(sval,s,9)==0;
 } 
 ```
@@ -427,18 +428,20 @@ void touch3(char* sval)
 
 ```asm
 (gdb) x/20cb 0x6044e4
-0x6044e4 <cookie>:      -6 '\372'       -105 '\227'     -71 '\271'      89 'Y'  0 '\000'        0 '
-        0 '\000'        0 '\000'
-0x6044ec:       0 '\000'        0 '\000'        0 '\000'        0 '\000'        0 '\000'        0 '
-        0 '\000'        0 '\000'
-0x6044f4:       0 '\000'        0 '\000'        0 '\000'        0 '\000'
+0x6044e4 <cookie>:      -6 '\372'       -105 '\227'     -71 '\271'      89 'Y' 
 (gdb) x/20xb 0x6044e4
-0x6044e4 <cookie>:      0xfa    0x97    0xb9    0x59    0x00    0x00    0x00    0x00
-0x6044ec:       0x00    0x00    0x00    0x00    0x00    0x00    0x00    0x00
-0x6044f4:       0x00    0x00    0x00    0x00
+0x6044e4 <cookie>:      0xfa    0x97    0xb9    0x59    0x00    0x00    0x00 
+(gdb) x/20tb 0x6044e4
+0x6044e4 <cookie>:    11111010        10010111        10111001       01011001
 ```
 
 
+
+
+
+
+
+`注意：ascii码是有符号的，0xfa==-6=='\271'(八进制)`
 
 
 
