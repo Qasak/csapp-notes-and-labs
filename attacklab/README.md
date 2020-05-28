@@ -251,3 +251,108 @@ PASS: Would have posted the following:
 
 ### Level 3
 
+第3阶段还涉及代码注入攻击，但传递一个字符串作为参数。在ctarget中，函数hexmatch和touch3的代码具有以下C表示：
+
+
+
+```c
+/* Compare string to hex representation of unsigned value */
+int hexmatch(unsigned val, char *sval)
+{
+    char cbuf[110];
+    //Make position of check string unpredictable
+    char *s=cbuf+random()%100;
+    sprintf(s,"%.8x",val);
+    return strncmp(sval,s,9)==0;
+} 
+```
+
+
+
+```c
+void touch3(char* sval)
+{
+    vlevel=3;
+    if(hexmatch(cookie,sval))
+    {
+         printf("Touch3!: You called touch3(\"%s\")\n", sval); 
+        validate(3);
+    }else{
+         printf("Misfire: You called touch3(\"%s\")\n", sval); 
+        fail(3);
+    }
+    exit(0);
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```asm
+00000000004018fa <touch3>:
+  4018fa:	53                   	push   %rbx
+  4018fb:	48 89 fb             	mov    %rdi,%rbx
+  4018fe:	c7 05 d4 2b 20 00 03 	movl   $0x3,0x202bd4(%rip)        # 6044dc <vlevel>
+  401905:	00 00 00 
+  401908:	48 89 fe             	mov    %rdi,%rsi
+  40190b:	8b 3d d3 2b 20 00    	mov    0x202bd3(%rip),%edi        # 6044e4 <cookie>
+  401911:	e8 36 ff ff ff       	callq  40184c <hexmatch>
+  401916:	85 c0                	test   %eax,%eax
+  401918:	74 23                	je     40193d <touch3+0x43>
+  40191a:	48 89 da             	mov    %rbx,%rdx
+  40191d:	be 38 31 40 00       	mov    $0x403138,%esi
+  401922:	bf 01 00 00 00       	mov    $0x1,%edi
+  401927:	b8 00 00 00 00       	mov    $0x0,%eax
+  40192c:	e8 bf f4 ff ff       	callq  400df0 <__printf_chk@plt>
+  401931:	bf 03 00 00 00       	mov    $0x3,%edi
+  401936:	e8 52 03 00 00       	callq  401c8d <validate>
+  40193b:	eb 21                	jmp    40195e <touch3+0x64>
+  40193d:	48 89 da             	mov    %rbx,%rdx
+  401940:	be 60 31 40 00       	mov    $0x403160,%esi
+  401945:	bf 01 00 00 00       	mov    $0x1,%edi
+  40194a:	b8 00 00 00 00       	mov    $0x0,%eax
+  40194f:	e8 9c f4 ff ff       	callq  400df0 <__printf_chk@plt>
+  401954:	bf 03 00 00 00       	mov    $0x3,%edi
+  401959:	e8 f1 03 00 00       	callq  401d4f <fail>
+  40195e:	bf 00 00 00 00       	mov    $0x0,%edi
+  401963:	e8 d8 f4 ff ff       	callq  400e40 <exit@plt>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
