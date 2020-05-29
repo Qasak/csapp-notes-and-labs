@@ -497,5 +497,7 @@ void setval_210(unsigned *p)
 	400f1b: c3 						   retq
 ```
 
+字节序列48 89 c7对指令movq%rax、%rdi进行编码。（关于有用的movq指令的编码，请参见图3A。）这个序列后面跟着字节值c3，它对ret指令进行编码。函数从地址0x400f15开始，序列从函数的第四个字节开始。因此，此代码包含一个起始地址为0x400f18的小工具，它将把寄存器%rax中的64位值复制到寄存器%rdi。
 
+![img]([https://github.com/Qasak/all-about-csapp-labs/blob/master/attacklab/movq%20instructions.png](https://github.com/Qasak/all-about-csapp-labs/blob/master/attacklab/movq instructions.png))
 
