@@ -478,7 +478,7 @@ PASS: Would have posted the following:
 
 ![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/attacklab/gadget.png)
 
-
+在图中，堆栈包含一系列gadget地址。每个gadget由一系列指令字节组成，最后一个字节是0xc3，编码ret指令。当程序执行从该配置开始的ret指令时，它将启动一个gadget执行链，每个gadget的末尾都有ret指令，导致程序跳转到下一个gadget的开头。
 
 
 
