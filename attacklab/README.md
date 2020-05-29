@@ -474,7 +474,9 @@ PASS: Would have posted the following:
 
 幸运的是，聪明的人设计了一些策略，通过执行现有代码而不是注入新代码，在程序中完成有用的事情。Return-oriented programming（ROP）。ROP的策略是通过由一个或多个指令和指令ret组成的现有程序中的序列。
 
+`gadget`
 
+![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/attacklab/gadget.png)
 
 
 
