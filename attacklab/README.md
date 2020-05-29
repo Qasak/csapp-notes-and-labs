@@ -480,7 +480,22 @@ PASS: Would have posted the following:
 
 在图中，堆栈包含一系列gadget地址。每个gadget由一系列指令字节组成，最后一个字节是0xc3，编码ret指令。当程序执行从该配置开始的ret指令时，它将启动一个gadget执行链，每个gadget的末尾都有ret指令，导致程序跳转到下一个gadget的开头。
 
+gadget可以利用编译器生成的汇编语言语句对应的代码，特别是函数末尾的语句。实际上，这种形式可能有一些有用的gadget，但不足以实现许多重要的操作。例如，编译后的函数不太可能将popq%rdi作为ret之前的最后一条指令。幸运的是，使用面向字节的指令集（如x86-64），通常可以通过从指令字节序列的其他部分提取模式来找到gadget。
 
+```c
+void setval_210(unsigned *p)
+{
+    *p=3347663060U;
+}
+```
+
+
+
+```asm
+0000000000400f15 <setval_210>: 
+	400f15: c7 07 d4 48 89 c7 			movl $0xc78948d4,(%rdi) 
+	400f1b: c3 						   retq
+```
 
 
 
