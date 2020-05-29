@@ -23,7 +23,9 @@ CSAPP lab全部题解
 
 [attack_lab](https://github.com/Qasak/all-about-csapp-labs/blob/master/attacklab/README.md)
 
+## cache_lab
 
+[cache_lab](https://github.com/Qasak/all-about-csapp-labs/blob/master/cachelab/README.md)
 
 ### ps
 
