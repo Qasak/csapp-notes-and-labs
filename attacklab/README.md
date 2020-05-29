@@ -501,5 +501,7 @@ void setval_210(unsigned *p)
 
 ![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/attacklab/movq_instructions.png)
 
+您的RTARGET代码包含许多类似于上面所示的setval_210的函数，我们称之为gadget farm。您的工作将是识别gadget farm中有用的gadget，并使用这些gadget执行与在phase2和phase3中执行的攻击相似的攻击。
+
 
 
