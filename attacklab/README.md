@@ -499,7 +499,7 @@ void setval_210(unsigned *p)
 
 字节序列48 89 c7对指令movq%rax、%rdi进行编码。（下图）这个序列后面跟着字节值c3，它对ret指令进行编码。函数从地址0x400f15开始，序列从函数的第四个字节开始。因此，此代码包含一个起始地址为0x400f18的gadget，它将把寄存器%rax中的64位值复制到寄存器%rdi。
 
-![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/attacklab/movq_instructions.png)
+
 
 您的RTARGET代码包含许多类似于上面所示的setval_210的函数，我们称之为gadget farm。您的工作将是识别gadget farm中有用的gadget，并使用这些gadget执行与在phase2和phase3中执行的攻击相似的攻击。
 
@@ -507,7 +507,17 @@ void setval_210(unsigned *p)
 
 对于phse4，您将重复phase2的攻击，但请使用gadget farm中的gadget对程序RTARGET执行此操作。您可以使用由以下指令类型组成的gadget构造解决方案，并且只使用前八个x86-64寄存器（%rax–%rdi）。
 
-movq：这些代码如图3A所示。popq：这些代码如图3B所示。ret：此指令由单字节0xc3编码。nop：此指令（读作“no op”，简称“no operation”）由单字节0x90编码。它的唯一作用是使程序计数器递增1。
+movq：
+
+![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/attacklab/movq_instructions.png)
+
+popq：
+
+![img](https://github.com/Qasak/all-about-csapp-labs/blob/master/attacklab/popq_instructions.png)
+
+ret：0x3c 
+
+nop：0x90,的唯一作用是使程序计数器递增1。
 
 
 
