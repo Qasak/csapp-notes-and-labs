@@ -521,3 +521,15 @@ nop：0x90,的唯一作用是使程序计数器递增1。
 
 
 
+要做的：
+
+`mov (cookie) %rdi; mov &touch2 (%rsp); ret; `
+
+其中 cookie=0x59b997fa
+
+
+
+### level3
+
+
+
