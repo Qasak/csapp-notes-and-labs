@@ -503,5 +503,11 @@ void setval_210(unsigned *p)
 
 您的RTARGET代码包含许多类似于上面所示的setval_210的函数，我们称之为gadget farm。您的工作将是识别gadget farm中有用的gadget，并使用这些gadget执行与在phase2和phase3中执行的攻击相似的攻击。
 
+### level 2
+
+对于phse4，您将重复phase2的攻击，但请使用gadget farm中的gadget对程序RTARGET执行此操作。您可以使用由以下指令类型组成的gadget构造解决方案，并且只使用前八个x86-64寄存器（%rax–%rdi）。
+
+movq：这些代码如图3A所示。popq：这些代码如图3B所示。ret：此指令由单字节0xc3编码。nop：此指令（读作“no op”，简称“no operation”）由单字节0x90编码。它的唯一作用是使程序计数器递增1。
+
 
 
