@@ -1,9 +1,3 @@
-This is the handout directory for the CS:APP Cache Lab. 
-
-************************
-Running the autograders:
-************************
-
 Before running the autograders, compile your code:
     linux> make
 
