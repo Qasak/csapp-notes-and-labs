@@ -529,7 +529,7 @@ nop：0x90,的唯一作用是使程序计数器递增1。
 
 `mov %rsp %rdi;pop rdi;ret`
 
-`rsp->rax;pop xxx;rax->rdi: (48 89 e0 -> 48 89 c7)`
+`rsp->rax;pop rax;rax->rdi: (48 89 e0 -> 48 89 c7)`
 
 ```asm
 # mov rsp rax
