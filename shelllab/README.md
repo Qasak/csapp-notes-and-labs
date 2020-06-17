@@ -30,3 +30,19 @@
  */
 ```
 
+## 需要完成的函数原型
+
+```c++
+/* Function prototypes */
+
+/* Here are the functions that you will implement */
+void eval(char *cmdline);
+int builtin_cmd(char **argv);
+void do_bgfg(char **argv);
+void waitfg(pid_t pid);
+
+void sigchld_handler(int sig);
+void sigtstp_handler(int sig);
+void sigint_handler(int sig);
+```
+
