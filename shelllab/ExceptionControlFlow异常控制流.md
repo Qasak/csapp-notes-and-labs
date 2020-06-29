@@ -94,6 +94,30 @@ e5dfa:   c3                  retq
 + 例如：缺页(page fault，可恢复)，保护错误(protection faults,不可恢复)，浮点异常
 + 重新执行故障指令("current")或终止(abort)
 
+#### 缺页
+
++ 页：虚拟内存一个连续的块(4KB)
+
++ eg:用户写入的页面没在物理内存，而在磁盘上
+
++ ```c
+  int a[1000];
+  main ()
+  {
+      a[500] = 13;
+  }
+  ```
+
++ ```asm
+  80483b7:	c7 05 10 9d 04 08 0d 	movl   $0xd,0x8049d10
+  ```
+
+![image-20200629185703963](C:\Users\qasak\AppData\Roaming\Typora\typora-user-images\fault.png)
+
+
+
+
+
 ### 终止
 
 + 非故意，且不可恢复
