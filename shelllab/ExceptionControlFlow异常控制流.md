@@ -29,7 +29,7 @@
     + Linux的0号中断
 
     + 每隔几毫秒，外部时钟芯片触发一次
-    + 内核用来从用户程序收回控制权
+    + 内核用来从用户程序收回控制权(内核判断进程运行了足够长时间，切换到一个新的进程)
     + “时钟中断”是整个操作系统的脉搏
 
   + 外部设备I/O中断
@@ -183,3 +183,68 @@ eg：在linux终端敲top
   § 没有在执行的进程把寄存器值保存在内存
 
   § 当切换地址空间(上下文切换)时，从内存加载寄存器值
+
+### 上下文切换
+
++ 进程由内核管理
+  + 内核不是一个单独的进程，内核不是一个单独的进程，而是作为某个现有进程的一部分运行。
++ 控制流通过上下文切换从一个进程传递到另一个进程
+
+
+
+## 进程控制
+
+### 系统调用错误处理
+
++ 遇到错误，Linux系统级函数通常返回-1，设置全局变量`errno`以指示原因
+
++ 硬性规定（Hard and fast rule）
+  + 必须检查每个系统调用级函数的返回状态
+  + 唯一的例外是有些函数返回`void`,比如说exit和free
+
++ eg:
+
+  ```c
+      if ((pid = fork()) < 0) {
+          fprintf(stderr, "fork error: %s\n", strerror(errno));
+          exit(0);
+      }
+  ```
+
+> ```
+> #include <errno.h>
+> ```
+>
+> C 库函数 **char \*strerror(int errnum)** 从内部数组中搜索错误号 **errnum**，并返回一个指向错误消息字符串的指针。**strerror** 生成的错误字符串取决于开发平台和编译器。
+
+### 错误报告函数
+
+```c
+void unix_error(char *msg) /* Unix-style error */
+{
+    fprintf(stderr, "%s: %s\n", msg, strerror(errno));
+    exit(0);
+}
+```
+
++ Stevens-style错误包装器
+
+  ```c
+  pid_t Fork(void)
+  {
+      pid_t pid;
+  
+      if ((pid = fork()) < 0)
+          unix_error("Fork error");
+      return pid;
+  }
+  ```
+
+### 获取进程IDs
+
++ **pid_t** **getpid**(void)
+  + 返回当前进程PID
+
++ **pid_t** **getppid**(void)
+  + 返回父进程PID
+
