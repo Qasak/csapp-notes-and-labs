@@ -271,3 +271,50 @@ void unix_error(char *msg) /* Unix-style error */
   + 另一种显式设置退出状态的方法是从主程序返回一个整数值
 + `exit`被调用一次但永远不返回
 
+### 创建进程
+
++ 父进程通过调用`fork`创建新的运行的子进程
++ `int fork(void)`
+  + 将0返回给子进程，将子进程的PID返回给父进程
+  + 子与父几乎相同
+    + 子进程获取父进程虚拟地址空间的相同（但独立）副本
+    + 子进程获取父进程打开文件描述符的相同副本
+    +  子进程的PID与父进程不同
+
+### `fork`例子：
+
+```c
+int main()
+{
+    pid_t pid;
+    int x = 1;
+
+    pid = Fork(); 
+    if (pid == 0) {  /* Child */
+        printf("child : x=%d\n", ++x); 
+	exit(0);
+    }
+
+    /* Parent */
+    printf("parent: x=%d\n", --x); 
+    exit(0);
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
