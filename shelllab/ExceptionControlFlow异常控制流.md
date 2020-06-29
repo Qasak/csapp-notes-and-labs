@@ -2,7 +2,7 @@
 
 + 异常是指控制权转移到操作系统内核以响应某些事件（即处理器状态的变化）
   + Kernel是操作系统驻留内存的部分
-  + ![image-20200629181634103](C:\Users\qasak\AppData\Roaming\Typora\typora-user-images\image-20200629181634103.png)
+  + ![image-20200629181634103](C:\Users\qasak\AppData\Roaming\Typora\typora-user-images\exception.png)
 
 
 
