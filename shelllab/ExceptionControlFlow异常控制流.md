@@ -114,7 +114,27 @@ e5dfa:   c3                  retq
 
 ![image-20200629185703963](C:\Users\qasak\AppData\Roaming\Typora\typora-user-images\fault.png)
 
+#### 无效内存引用
 
++ abort
+
++ ```c
+  int a[1000];
+  main ()
+  {
+      a[5000] = 13;
+  }
+  
+  ```
+
++ ```asm
+  80483b7:	c7 05 60 e3 04 08 0d 	movl   $0xd,0x804e360
+  ```
+
++ 发送`SIGSEGV`给用户进程
++ 用户进程退出 with "segmentation fault"
+
+![image-20200629190015182](C:\Users\qasak\AppData\Roaming\Typora\typora-user-images\invalid_mem_ref.png)
 
 
 
@@ -124,3 +144,40 @@ e5dfa:   c3                  retq
 + 比如：非法指令，奇偶校验错误(parity error)，机器检查(machine check)
 + 终止当前程序
 
+## 进程
+
++ 定义：一个进程是一个运行着的程序的实例
++ definition: A process is an instance of a running program.
+  + 计算机科学中最意义深远的概念之一
+
++ 进程给每个程序提供了两个关键抽象
+  + **逻辑控制流**Logical control flow
+    + 每个程序看起来独占CPU
+    + 由内核的*上下文切换(context switching)*机制提供
+  + **私有地址空间**Private address space
+    + 每个程序看起来独占使用内存
+    + 由内核的*虚拟内存(virtual memory)*机制提供
+
+![image-20200629190516621](C:\Users\qasak\AppData\Roaming\Typora\typora-user-images\mem.png)![image-20200629190522887](C:\Users\qasak\AppData\Roaming\Typora\typora-user-images\cpu.png)
+
+### 多进程：假象
+
++ 计算机同时运行许多进程
+  + 多用户应用
+    + 网页浏览器，email终端，编辑器...
+  + 后台任务
+    + 监视网络 & I/O设备
+
+eg：在linux终端敲top
+
+#### 多进程：传统实现
+
+![image-20200629191333229](C:\Users\qasak\AppData\Roaming\Typora\typora-user-images\multi-processing.png)
+
++ 单处理器并发执行多个进程
+
+  § 进程执行交错（多任务）
+
+  § 由虚拟内存系统管理地址空间
+
+  § 没有在执行的进程把寄存器值保存在内存
