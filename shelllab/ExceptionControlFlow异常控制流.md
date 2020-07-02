@@ -360,13 +360,103 @@ void fork9() {
 
 ```
 
+![img](https://github.com/Qasak/all-about-computer-system/blob/master/shelllab/%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5Synchronizing%20with%20Children.png)
+
++ 多个子进程的完成将是任意顺序的
++ 可以使用宏WIFEXITED和WEXITSTATUS获取有关退出状态的信息
+
+```c
+void fork10() {
+    pid_t pid[N];
+    int i, child_status;
+
+    for (i = 0; i < N; i++)
+        if ((pid[i] = fork()) == 0) {
+            exit(100+i); /* Child */
+        }
+    for (i = 0; i < N; i++) { /* Parent */
+        pid_t wpid = wait(&child_status);
+        if (WIFEXITED(child_status))
+            printf("Child %d terminated with exit status %d\n",
+                   wpid, WEXITSTATUS(child_status));
+        else
+            printf("Child %d terminate abnormally\n", wpid);
+    }
+}
+
+```
+
+```
+Child 196 terminated with exit status 100
+Child 197 terminated with exit status 101
+Child 198 terminated with exit status 102
+Child 199 terminated with exit status 103
+Child 200 terminated with exit status 104
+```
 
 
 
+### `waitpid`:等待特定进程
+
+```c
+void fork11() {
+    pid_t pid[N];
+    int i;
+    int child_status;
+
+    for (i = 0; i < N; i++)
+        if ((pid[i] = fork()) == 0)
+            exit(100+i); /* Child */
+    for (i = N-1; i >= 0; i--) {
+        pid_t wpid = waitpid(pid[i], &child_status, 0);
+        if (WIFEXITED(child_status))
+            printf("Child %d terminated with exit status %d\n",
+                   wpid, WEXITSTATUS(child_status));
+        else
+            printf("Child %d terminate abnormally\n", wpid);
+    }
+}
+
+```
 
 
 
+### `execve`:加载并允许程序
 
++ **int** execve(char \*filename, char \*argv[], char \*envp[])
 
++ 在当前进程中加载并允许
 
+  + 可执行文件 `filename`
+
+    + 可以是目标文件(object file)或以`# ! interpreter`开头的脚本文件(script file)
+
+      (e.g., #! /bin/bash)
+
+  + 参数表`argv`
+
+    + 按惯例`argv[0]=filename`
+
+  + 环境变量表`envp`
+
+    + "name=value"字符串(e.g., USER=droh)
+    + `getenv`,`putenv`,`printenv`(`#include<stdlib.h>`)
+
++ 覆盖code,data和stack
+
+  + 保留PID，打开文件和信号上下文
+
++ 一次调用，永不返回
+
+  + 除非有报错(例如找不到`filename`)
+
+## 总结
+
++ 异常
+  + 需要非标准控制流的事件
+  + 外部（中断）或内部（陷阱和故障）产生
++ 进程
+  + 在任何给定时间，系统都有多个活动进程
+  + 在一个内核上一次只能执行一个
+  + 每个进程看起来完全控制了处理器+私有内存空间
 
