@@ -302,11 +302,63 @@ int main()
 
 ```
 
+### 进程图
+
+```c
+void fork5()
+{
+    printf("L0\n");
+    if (fork() == 0) {
+        printf("L1\n");
+        if (fork() == 0) {
+            printf("L2\n");
+        }
+    }
+    printf("Bye\n");
+}
+
+```
+
+<img src="C:\Users\qasak\Documents\GitHub\all-about-csapp-labs\shelllab\process_graph0.png" style="zoom:38%;" />
 
 
 
+### 回收子进程
 
+当一个进程由于某种状态终止，内核并不是把它从系统清除，而是保持在已终止状态，直到它被父进程回收(reaped)
 
+如果父进程没有回收它的僵死子进程就结束了，内核会安排init进程取回收他们(init PID：1，是所有进程的祖先)。
+
+不过，长时间运行的程序，比如shell或服务器，总是应该回收它们的僵死子进程
+
+即使僵死子进程没有运行，也消耗系统的内存资源
+
+回收：
+
++ 父进程终止子进程（使用wait或waitpid）
+
+### `wait` 与子进程同步
+
++ **int** **wait(int**  \****child_status***)
+  + 挂起当前进程，直到它的一个子进程终止
+  + 返回值是终止的子进程的pid
+
+```c
+void fork9() {
+    int child_status;
+
+    if (fork() == 0) {
+        printf("HC: hello from child\n");
+	exit(0);
+    } else {
+        printf("HP: hello from parent\n");
+        wait(&child_status);
+        printf("CT: child has terminated\n");
+    }
+    printf("Bye\n");
+}
+
+```
 
 
 
