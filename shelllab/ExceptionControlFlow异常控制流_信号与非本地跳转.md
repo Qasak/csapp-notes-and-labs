@@ -9,6 +9,8 @@
 
 + Linux 进程层次结构
 
+  ![img](https://github.com/Qasak/all-about-computer-system/blob/master/shelllab/Linux_Process_Hierarchy.png)
+
 ## shells
 
 
