@@ -85,6 +85,104 @@
 
 + 每个进程只属于一个进程组
 
+### 用/bin/kill发送信号
+
++ /bin/kill程序向进程或进程组发送任意信号
+  + /bin/kill–9 24818发送SIGKILL到进程24818
+  + /bin/kill–9–24817将SIGKILL发送到进程组24817中的每个进程
+
+### 键盘发送信号
+
+键入ctrl-c（ctrl-z），内核向前台进程组中的每个作业发送SIGINT（SIGTSTP）。
+
+### `kill`函数发送信号
+
+```c
+ kill(pid[i], SIGINT);
+```
+
+### 接收信号
+
++ 假设内核正在从异常处理程序返回(内核模式切换到用户模式，例如：从系统调用返回或完成了一次上下文切换)，并准备将控制权传递给进程p
+
++ 内核计算`pnb=pending&~blocked`
+
+  + 进程p的挂起的非阻塞信号集合
+
++ `if (pnb == 0)`
+
+  + 将控制权传递给p的逻辑流中的下一条指令
+
++ `else`
+
+  + 在pnb中选择最小非零位k并强制进程p接收信号k
+
+    信号的接收触发了p的一些动作
+
+    对pnb中所有非零k重复上述步骤
+
+    将控制权传递给p的逻辑流中的下一条指令
+
+### 默认行为
+
++ 每种信号类型都有一个预定义的默认行为，即：
+  + 进程终止
+  + 进程终止并转储内存
+  + 进程停止，直到被SIGCONT信号重启
+  + 忽略
+
+### 安装信号处理程序(Installing Signal Handlers)
+
++ signal函数修改与接收信号signum相关的默认操作(唯一的例外是SIGSTOP和SIGKILL
+
+  它们的默认行为不可被修改)：
+
+  + `handler_t *signal(int signum, handler_t *handler)`
+
++ 不同值的`handler`
+
+  + SIG_IGN：忽略signum类型的信号
+
+  + SIG_DFL：在接收到signum类型的信号时恢复为默认操作
+
+  + 否则，handler是用户级信号处理程序的地址
+
+    + 进程接收信号时的类型是signum时被调用
+
+    + 称为“安装”处理程序
+
+    + 执行处理程序被称为“捕捉”或“处理”信号
+
+    + 当处理程序执行其return语句时，控制权会传回因接收到信号而中断的进程的控制流中的指令
+
+```c
+void sigint_handler(int sig) /* SIGINT handler */
+{
+    printf("So you think you can stop the bomb with ctrl-c, do you?\n");
+    sleep(2);
+    printf("Well...");
+    fflush(stdout);
+    sleep(1);
+    printf("OK. :-)\n");
+    exit(0);
+}
+
+int main()
+{
+    /* Install the SIGINT handler */
+    if (signal(SIGINT, sigint_handler) == SIG_ERR)
+        unix_error("signal error");
+
+    /* Wait for the receipt of a signal */
+    pause();
+
+    return 0;
+}
+
+```
+
+
+
 ## 非本地跳转
 
 
