@@ -156,6 +156,7 @@ e5dfa:   c3                  retq
     + 由内核的*上下文切换(context switching)*机制提供
   + **私有地址空间**Private address space
     + 每个程序看起来独占使用内存
+    + 给正在运行的程序一个***状态***
     + 由内核的*虚拟内存(virtual memory)*机制提供
 
 ![image-20200629190516621](C:\Users\qasak\AppData\Roaming\Typora\typora-user-images\mem.png)![image-20200629190522887](C:\Users\qasak\AppData\Roaming\Typora\typora-user-images\cpu.png)
