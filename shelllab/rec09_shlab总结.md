@@ -73,7 +73,42 @@ Child!
 Parent!
 ```
 
+## 信号
+
++ 信号是一个小消息，它通知进程系统中发生了某种类型的事件
++ 类似于异常和中断
++ 从内核（有时应另一个进程的请求）发送到进程
++ 信号类型由小整数ID标识（1-30）
++ 信号中唯一的信息是它的ID和它到达的事实
+
+| **ID** | **Name** | **Default Action** | **Corresponding Event**           |
+| ------ | -------- | ------------------ | --------------------------------- |
+| 2      | SIGINT   | Terminate          | User  typed ctrl-c                |
+| 9      | SIGKILL  | Terminate          | Kill  program (不能覆盖或忽略)    |
+| 11     | SIGSEGV  | Terminate & Dump   | Segmentation  violation(分段冲突) |
+| 14     | SIGALRM  | Terminate          | Timer  signal                     |
+| 17     | SIGCHLD  | Ignore             | Child  stopped or terminated      |
+
+### 发送信号
+
++ 内核通过更新目标进程上下文中的某些状态来向目标进程发送（传递）信号
++ 内核由于以下原因之一发送信号
+  + 内核检测到`系统事件`，如被零除（SIGFPE）或子进程终止（SIGCHLD）
+  + 另一个进程调用 `kill` 系统调用显式地请求内核向目标进程发送信号
+
+### 接收信号
 
 
 
+### 信号处理 signal handler
 
++ 形如`void handler(int signum)`
++ 进程中的独立控制流
++ 根据返回恢复正常控制流
++ 适当的信号被触发时，可随时被调用
+
+### `int sigsuspend(const sigset_t *mask)`
+
++ 挂起进程，直到收到行为是调用handler或终止进程的信号
++ 若捕获到信号，但会
+  + 信号mask恢复成之前的状态

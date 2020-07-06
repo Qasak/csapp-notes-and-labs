@@ -40,7 +40,7 @@
 | ------ | -------- | ------------------ | --------------------------------- |
 | 2      | SIGINT   | Terminate          | User  typed ctrl-c                |
 | 9      | SIGKILL  | Terminate          | Kill  program (不能覆盖或忽略)    |
-| 11     | SIGSEGV  | Terminate          | Segmentation  violation(分段冲突) |
+| 11     | SIGSEGV  | Terminate & Dump   | Segmentation  violation(分段冲突) |
 | 14     | SIGALRM  | Terminate          | Timer  signal                     |
 | 17     | SIGCHLD  | Ignore             | Child  stopped or terminated      |
 
@@ -48,7 +48,7 @@
 
 + 内核通过更新目标进程上下文中的某些状态来向目标进程发送（传递）信号
 + 内核由于以下原因之一发送信号
-  + 内核检测到系统事件，如被零除（SIGFPE）或子进程终止（SIGCHLD）
+  + 内核检测到`系统事件`，如被零除（SIGFPE）或子进程终止（SIGCHLD）
   + 另一个进程调用 `kill` 系统调用显式地请求内核向目标进程发送信号
 
 ### 接收信号
