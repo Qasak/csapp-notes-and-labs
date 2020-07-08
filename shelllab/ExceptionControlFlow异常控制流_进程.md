@@ -501,3 +501,6 @@ linux系统中也存在容易捕捉的TASK_UNINTERRUPTIBLE状态。执行vfork�
 通过下面的代码能够制造一个EXIT_ZOMBIE状态的进程：
 
 \#include  void main() { if (fork()) while(1) sleep(100); }
+
++ **X (TASK_DEAD - EXIT_DEAD)，退出状态，进程即将被销毁**
++ 
