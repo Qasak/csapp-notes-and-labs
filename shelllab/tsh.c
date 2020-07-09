@@ -101,6 +101,7 @@ static size_t sio_strlen(char s[]);
 void Rio_writen(int fd, void *usrbuf, size_t n);
 ssize_t rio_writen(int fd, void *usrbuf, size_t n) ;
 void Kill(pid_t pid, int signum);
+void Setpgid(pid_t pid, pid_t pgid);
 /*********************************************
  * Wrappers for Unix process control functions
  ********************************************/
@@ -244,54 +245,49 @@ void eval(char *cmdline)
     char buf[MAXLINE];   /* Holds modified command line */
     int bg;              /* Should the job run in bg or fg? */
 
-
-    sigset_t mask_all, mask_sigchld, mask_sigint, mask_sigtstp, prev_one;
+    sigset_t mask_all, mask_sigchld, mask_sigint, mask_sigtstp, prev_one, mask_three;
 
     Sigfillset(&mask_all);
     Sigemptyset(&mask_sigchld);
     Sigemptyset(&mask_sigint);
     Sigemptyset(&mask_sigtstp);
+    Sigemptyset(&mask_three);
+
     Sigaddset(&mask_sigchld, SIGCHLD);
     Sigaddset(&mask_sigint, SIGINT);
     Sigaddset(&mask_sigtstp, SIGTSTP);
+
+    Sigaddset(&mask_three, SIGCHLD);
+    Sigaddset(&mask_three, SIGINT);
+    Sigaddset(&mask_three, SIGTSTP);
 
     strcpy(buf, cmdline);
     bg = parseline(buf, argv); 
     if (argv[0] == NULL)  
 	return;   /* Ignore empty lines */
 
-
+    Sigprocmask(SIG_BLOCK, &mask_three, &prev_one);
     if (!builtin_cmd(argv)) { 
-        Sigprocmask(SIG_BLOCK, &mask_sigint, &prev_one);
-        Sigprocmask(SIG_BLOCK, &mask_sigtstp, &prev_one);
         if ((pid = Fork()) == 0) {   /* Child runs user job */
-            if(!bg) {
-                Sigprocmask(SIG_UNBLOCK, &mask_sigint, NULL);
-                Sigprocmask(SIG_UNBLOCK, &mask_sigtstp, NULL);
-            }
-            
-            if (execve(argv[0], argv, environ) < 0) {
+            setpgid(0, 0);
+            Sigprocmask(SIG_SETMASK, &prev_one, NULL);
+            if (execve(argv[0], argv, environ)<0) {
                 printf("%s: Command not found.\n", argv[0]);
                 exit(0);
             }
         }
-
-	/* Parent waits for foreground job to terminate */
+	    /* Parent waits for foreground job to terminate */
         if (!bg) {
-            Sigprocmask(SIG_BLOCK, &mask_all, NULL);
             addjob(jobs, pid, FG, cmdline);
-            Sigprocmask(SIG_SETMASK, &prev_one, NULL);
-
             pid=0;
             while(!pid)
             sigsuspend(&prev_one);
         }
         else {
-            Sigprocmask(SIG_BLOCK, &mask_all, NULL);
             addjob(jobs, pid, BG, cmdline);
-            Sigprocmask(SIG_SETMASK, &prev_one, NULL);
         }
     }
+    Sigprocmask(SIG_SETMASK, &prev_one, NULL);
 
     return;
 }
@@ -428,10 +424,12 @@ void sigchld_handler(int sig)
 void sigint_handler(int sig) 
 {
     int olderrno = errno;
+    pid_t pid;
     sigset_t mask_all, prev_all;
     Sigfillset(&mask_all);
     Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
     pid=fgpid(jobs);
+    printf("fg pid: %d\n", pid);
     if(pid) {
         Kill(pid, SIGINT);
         deletejob(jobs, pid);
@@ -504,6 +502,9 @@ int addjob(struct job_t *jobs, pid_t pid, int state, char *cmdline)
   	    if(verbose){
 	        printf("Added job [%d] %d %s\n", jobs[i].jid, jobs[i].pid, jobs[i].cmdline);
             }
+        // else {
+        //     printf("[%d] (%d) %s\n", jobs[i].jid, jobs[i].pid, jobs[i].cmdline);
+        // }
             return 1;
 	}
     }
@@ -715,4 +716,12 @@ void Rio_writen(int fd, void *usrbuf, size_t n)
 {
     if (rio_writen(fd, usrbuf, n) != n)
 	unix_error("Rio_writen error");
+}
+
+void Setpgid(pid_t pid, pid_t pgid) {
+    int rc;
+
+    if ((rc = setpgid(pid, pgid)) < 0)
+	unix_error("Setpgid error");
+    return;
 }
