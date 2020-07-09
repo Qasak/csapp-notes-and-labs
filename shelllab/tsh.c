@@ -25,6 +25,7 @@
 #define BG 2    /* running in background */
 #define ST 3    /* stopped */
 
+#define NOREAP 1
 /* 
  * Jobs states: FG (foreground), BG (background), ST (stopped)
  * Job state transitions and enabling actions:
@@ -70,6 +71,7 @@ void sigquit_handler(int sig);
 
 void clearjob(struct job_t *job);
 void initjobs(struct job_t *jobs);
+void setjobstate(struct job_t *job, int state);
 int maxjid(struct job_t *jobs); 
 int addjob(struct job_t *jobs, pid_t pid, int state, char *cmdline);
 int deletejob(struct job_t *jobs, pid_t pid); 
@@ -102,6 +104,8 @@ void Rio_writen(int fd, void *usrbuf, size_t n);
 ssize_t rio_writen(int fd, void *usrbuf, size_t n) ;
 void Kill(pid_t pid, int signum);
 void Setpgid(pid_t pid, pid_t pgid);
+
+
 /*********************************************
  * Wrappers for Unix process control functions
  ********************************************/
@@ -280,8 +284,11 @@ void eval(char *cmdline)
         if (!bg) {
             addjob(jobs, pid, FG, cmdline);
             pid=0;
-            while(!pid)
-            sigsuspend(&prev_one);
+            while(!pid) {
+                sigsuspend(&prev_one);
+            }
+            
+                
         }
         else {
             addjob(jobs, pid, BG, cmdline);
@@ -410,8 +417,10 @@ void sigchld_handler(int sig)
     sigset_t mask_all, prev_all;
     Sigfillset(&mask_all);
     Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
-    pid=waitpid(-1, NULL, 0);
-    deletejob(jobs, pid);
+    pid=waitpid(-1, NULL, WNOHANG);
+    if(pid) {
+        deletejob(jobs, pid);
+    }
     Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     errno = olderrno;
 }
@@ -424,16 +433,14 @@ void sigchld_handler(int sig)
 void sigint_handler(int sig) 
 {
     int olderrno = errno;
-    pid_t pid;
     sigset_t mask_all, prev_all;
     Sigfillset(&mask_all);
     Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
     pid=fgpid(jobs);
-    printf("fg pid: %d\n", pid);
     if(pid) {
         Kill(pid, SIGINT);
-        deletejob(jobs, pid);
     }
+    pid = 0;
     Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     errno = olderrno;
 }
@@ -445,7 +452,17 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
-    return;
+    int olderrno = errno;
+    sigset_t mask_all, prev_all;
+    Sigfillset(&mask_all);
+    Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+    pid=fgpid(jobs);
+    if(pid) {
+        Kill(pid, SIGTSTP);
+        setjobstate(getjobpid(jobs, pid), ST);
+    }
+    Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+    errno = olderrno;
 }
 
 /*********************
@@ -605,10 +622,13 @@ void listjobs(struct job_t *jobs)
 	}
     }
 }
+
 /******************************
  * end job list helper routines
  ******************************/
-
+void setjobstate(struct job_t *job, int state) {
+    job->state = state;
+}
 
 /***********************
  * Other helper routines
