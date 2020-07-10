@@ -390,8 +390,22 @@ int builtin_cmd(char **argv)
 void do_bgfg(char **argv) 
 {
     int bg=0, fg=0;
-    // sigset_t mask_all, prev_one;
+    sigset_t mask_all, mask_sigchld, mask_sigint, mask_sigtstp, prev_one, mask_three;
 
+    Sigfillset(&mask_all);
+    Sigemptyset(&mask_sigchld);
+    Sigemptyset(&mask_sigint);
+    Sigemptyset(&mask_sigtstp);
+    Sigemptyset(&mask_three);
+
+    Sigaddset(&mask_sigchld, SIGCHLD);
+    Sigaddset(&mask_sigint, SIGINT);
+    Sigaddset(&mask_sigtstp, SIGTSTP);
+
+    Sigaddset(&mask_three, SIGCHLD);
+    Sigaddset(&mask_three, SIGINT);
+    Sigaddset(&mask_three, SIGTSTP);
+    Sigprocmask(SIG_BLOCK, &mask_three, &prev_one);
     if(!strcmp(argv[0], "bg")) {
         bg=1;
     } else {
@@ -432,22 +446,6 @@ void do_bgfg(char **argv)
         }
     }
     else { //fg
-        sigset_t mask_all, mask_sigchld, mask_sigint, mask_sigtstp, prev_one, mask_three;
-
-        Sigfillset(&mask_all);
-        Sigemptyset(&mask_sigchld);
-        Sigemptyset(&mask_sigint);
-        Sigemptyset(&mask_sigtstp);
-        Sigemptyset(&mask_three);
-
-        Sigaddset(&mask_sigchld, SIGCHLD);
-        Sigaddset(&mask_sigint, SIGINT);
-        Sigaddset(&mask_sigtstp, SIGTSTP);
-
-        Sigaddset(&mask_three, SIGCHLD);
-        Sigaddset(&mask_three, SIGINT);
-        Sigaddset(&mask_three, SIGTSTP);
-        Sigprocmask(SIG_BLOCK, &mask_three, &prev_one);
         if(!argv[1]) {
             Sio_puts("fg command requires PID or %jobid argument");
             return;
@@ -476,9 +474,9 @@ void do_bgfg(char **argv)
                 waitfg(job->pid);
             }
         }
-        Sigprocmask(SIG_SETMASK, &prev_one, NULL);
+        
     }
-    
+    Sigprocmask(SIG_SETMASK, &prev_one, NULL);
     return;
 }
 
@@ -519,6 +517,7 @@ void sigchld_handler(int sig)
     int status;
     Sigfillset(&mask_all);
     Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+    exited=signaled=termsig=stopped=stopsig=continued=0;
     pid=waitpid(-1, &status, (WNOHANG|WUNTRACED|WCONTINUED)); //return immediately, 0 if no stopped ot terminated process.
     exited=WIFEXITED(status);
     signaled=WIFSIGNALED(status);
@@ -548,8 +547,9 @@ void sigchld_handler(int sig)
         struct job_t *job;
         job=getjobpid(jobs, pid);
         getjobpid(jobs, pid);
-        setjobstate(job, FG);
     }
+    if(continued)
+        pid=0;
     Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     errno = olderrno;
 }
