@@ -284,7 +284,7 @@ void eval(char *cmdline)
         if (!bg) {
             addjob(jobs, pid, FG, cmdline);
             pid=0;
-            while(!pid) {
+            while(!pid) {               // waiting for SIGCHLD   
                 sigsuspend(&prev_one);
             }
             
@@ -386,6 +386,7 @@ int builtin_cmd(char **argv)
  */
 void do_bgfg(char **argv) 
 {
+
     return;
 }
 
@@ -415,20 +416,34 @@ void sigchld_handler(int sig)
 {
     int olderrno = errno;
     sigset_t mask_all, prev_all;
-    int exited, signaled, stopped, continued;
+    int exited, signaled,termsig, stopped, stopsig, continued;
     int status;
     Sigfillset(&mask_all);
     Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
     pid=waitpid(-1, &status, (WNOHANG|WUNTRACED)); //return immediately, 0 if no stopped ot terminated process.
     exited=WIFEXITED(status);
     signaled=WIFSIGNALED(status);
+    termsig=WTERMSIG(status);
     stopped=WIFSTOPPED(status);
+    stopsig=WSTOPSIG(status);
     continued=WIFCONTINUED(status);
-    if((pid && exited)||(pid && signaled)) {
+    if(pid && exited) {
+        struct job_t *job;
+        job=getjobpid(jobs, pid);
         deletejob(jobs, pid);
     } 
+    if(pid && signaled) {
+        struct job_t *job;
+        job=getjobpid(jobs, pid);
+        printf("Job[%d] (%d) terminated by signal %d\n", job->jid, pid, termsig);
+        deletejob(jobs, pid);
+    }
     if(pid && stopped) {
-        setjobstate(getjobpid(jobs, pid), ST);
+        struct job_t *job;
+        job=getjobpid(jobs, pid);
+        printf("Job[%d] (%d) stopped by signal %d\n", job->jid, pid, stopsig);
+        getjobpid(jobs, pid);
+        setjobstate(job, ST);
     }
     Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     errno = olderrno;
