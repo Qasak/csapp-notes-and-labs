@@ -287,13 +287,13 @@ void eval(char *cmdline)
             while(!pid) {
                 sigsuspend(&prev_one);
             }
-            Sigprocmask(SIG_SETMASK, &prev_one, NULL);
+            
         }
         else {
             addjob(jobs, pid, BG, cmdline);
-            Sigprocmask(SIG_SETMASK, &prev_one, NULL);
         }
     }
+    Sigprocmask(SIG_SETMASK, &prev_one, NULL);
     
 
     return;
@@ -414,15 +414,21 @@ void waitfg(pid_t pid)
 void sigchld_handler(int sig) 
 {
     int olderrno = errno;
-    int status, stopped = 0;
     sigset_t mask_all, prev_all;
+    int exited, signaled, stopped, continued;
+    int status;
     Sigfillset(&mask_all);
     Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
-    pid = waitpid(-1, &status, (WNOHANG)); // delete only terminated
-    stopped = WIFSTOPPED(status);
-    printf("pid: %d, stopped: %d\n",pid, stopped);
-    if(pid & !stopped) {
+    pid=waitpid(-1, &status, (WNOHANG|WUNTRACED)); //return immediately, 0 if no stopped ot terminated process.
+    exited=WIFEXITED(status);
+    signaled=WIFSIGNALED(status);
+    stopped=WIFSTOPPED(status);
+    continued=WIFCONTINUED(status);
+    if((pid && exited)||(pid && signaled)) {
         deletejob(jobs, pid);
+    } 
+    if(pid && stopped) {
+        setjobstate(getjobpid(jobs, pid), ST);
     }
     Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     errno = olderrno;
