@@ -471,6 +471,7 @@ void sigtstp_handler(int sig)
         setjobstate(getjobpid(jobs, pid), ST);
     }
     Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+    pid = 0;
     errno = olderrno;
 }
 
