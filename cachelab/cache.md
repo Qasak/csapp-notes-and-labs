@@ -24,7 +24,7 @@ L6: 远程二级存储 (比如: 网络服务器)
 
 ## cache通用结构
 
-`cache(S, E, B)`
+`cache(S, E, B, m)`
 
 考虑一个计算机系统，其中每个存储器地址有m位，形成$M=2^m$个不同的地址
 
@@ -42,6 +42,49 @@ L6: 远程二级存储 (比如: 网络服务器)
 
 ## cache运行过程
 
+假设一个系统
+
+它有一个CPU，一个寄存器文件，一个L1高速缓存，一个主存
+
+当CPU执行一条读内存字w的指令，它向L1高速缓存请求这个字
+
+这个字是否命中，然后抽取出被请求字的过程：
+
 1. 组选择
 2. 行匹配
 3. 字抽取
+
+![img](https://github.com/Qasak/all-about-computer-system/blob/master/cachelab/cache%E8%AF%BB.png)
+
+
+
+
+
+## 直接映射
+
+每个组只有一行(E=1)
+
+![img](https://github.com/Qasak/all-about-computer-system/blob/master/cachelab/cache%E7%9B%B4%E6%8E%A5%E6%98%A0%E5%B0%840.png)
+
+![img](https://github.com/Qasak/all-about-computer-system/blob/master/cachelab/cache%E7%9B%B4%E6%8E%A5%E6%98%A0%E5%B0%841.png)
+
++ 组选择：
+
+  高速缓存从w的地址中抽取s个组索引位。
+
+  这些位被解释成一个对应于组号的无符号整数(就像数组索引)
+
++ 行匹配：
+
+  因为只有一行，所以只用看有效位
+
++ 字抽取：
+
+  把块堪称一个字节数组，字节偏移是这个数组的一个索引
+
+  这个例子中块偏移是$100_2$，表明w的副本是从块中的字节4开始的
+
++ 不命中时的行替换：
+
+  用新取出的行替换当前行
+
