@@ -127,3 +127,18 @@ FIFO（命名管道）、system v共享内存和信号量
 
 ![img](https://github.com/Qasak/csapp-notes-and-labs/blob/master/proxylab/%E7%BA%BF%E7%A8%8B.png)
 
+### 一个具有多线程的进程
+
+多个线程可以与一个进程相关联
+
+每个线程都有自己的逻辑控制流
+
+每个线程共享相同的代码、数据和内核上下文
+
+每个线程都有自己的局部变量堆栈
+
+但不受其他线程的保护
+
+每个线程都有自己的线程id（TID）
+
+![img](https://github.com/Qasak/csapp-notes-and-labs/blob/master/proxylab/%E4%B8%80%E4%B8%AA%E5%85%B7%E6%9C%89%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E8%BF%9B%E7%A8%8B.png)
