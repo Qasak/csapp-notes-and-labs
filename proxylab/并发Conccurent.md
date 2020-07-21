@@ -142,3 +142,72 @@ FIFO（命名管道）、system v共享内存和信号量
 每个线程都有自己的线程id（TID）
 
 ![img](https://github.com/Qasak/csapp-notes-and-labs/blob/master/proxylab/%E4%B8%80%E4%B8%AA%E5%85%B7%E6%9C%89%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E8%BF%9B%E7%A8%8B.png)
+
+### 线程:逻辑视角
+
+![img](https://github.com/Qasak/csapp-notes-and-labs/blob/master/proxylab/%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%BD%A2%E6%88%90%E5%AF%B9%E7%AD%89%E6%B1%A0.png)
+
+## 线程 vs. 进程
+
++ 线程和进程有多像?
+  + 每个都有自己的逻辑控制流
+  + 每一个都可以与其他内核并发运行（可能在不同的内核上）
+  + 每个都是上下文切换的
+
++ 线程和进程的区别？
+  + 线程共享所有代码和数据（除了本地堆栈）
+  + 进程（通常）不会
+  + 线程比进程开销少一些
+
++ 进程控制（创建和获取）的成本是线程控制的两倍
+
+Linux中的数据：
+
++ 约20k个周期来创建和回收一个进程
+
++ 10K周期（或更少）来创建和回收一个线程
+
+### `Posix` 线程(`Pthread`)接口
+
++ Pthreads:60个操作C程序线程的函数的标准接口
+
++ 创建和获取线程
+  + `pthread_create（）`
+  + `pthread_join（）`
+
++ 确定线程ID
+  + `pthread_self（）`
+
++ 终止线程
+  + `pthread_cancel（）`
+  + `pthread_exit（）`
+  + `exit（）`[终止所有线程]，RET[终止当前线程]
+
++ 同步访问共享变量
+  + `pthread_mutex_init`
+
+  + `pthread_mutex_[un]lock`
+
+## 线程服务器issues
+
++ 必须运行“detached”以避免内存泄漏
+
++ 在任何时候，线程要么是可joinable，要么是detached
+
++ joinable线程可以被其他线程Kill或回收
+
++ 必须回收（使用`pthread_join`）以释放内存资源
+
++ detached线程不能被其他线程捕获或终止
+
++ 终止时自动获取资源
+
++ 默认状态是joinable
+
++ 使用`pthread_detach（pthread_self（））`进行detach
+
++ 必须小心避免无意间的共享
+  + 例如，传递指向主线程栈的指针
+  + `Pthread_create（&tid，NULL，thread，（void*）&connfd）；`
+
++ 线程调用的所有函数都必须是线程安全的
