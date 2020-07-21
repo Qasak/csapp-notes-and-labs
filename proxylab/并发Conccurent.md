@@ -190,24 +190,22 @@ Linux中的数据：
 
 ## 线程服务器issues
 
-+ 必须运行“detached”以避免内存泄漏
++ #### 必须运行“detached”以避免内存泄漏
 
-+ 在任何时候，线程要么是可joinable，要么是detached
+  + 在任何时候，线程要么是可joinable，要么是detached
+  + joinable线程可以被其他线程Kill或回收
+  + 必须回收（使用`pthread_join`）以释放内存资源
+  + detached线程不能被其他线程捕获或终止
+  + 终止时自动获取资源
+  + 默认状态是joinable
+  + 使用`pthread_detach（pthread_self（））`进行detach
 
-+ joinable线程可以被其他线程Kill或回收
++ #### 必须小心避免无意间的共享
 
-+ 必须回收（使用`pthread_join`）以释放内存资源
-
-+ detached线程不能被其他线程捕获或终止
-
-+ 终止时自动获取资源
-
-+ 默认状态是joinable
-
-+ 使用`pthread_detach（pthread_self（））`进行detach
-
-+ 必须小心避免无意间的共享
   + 例如，传递指向主线程栈的指针
   + `Pthread_create（&tid，NULL，thread，（void*）&connfd）；`
+    + eg：![img](https://github.com/Qasak/csapp-notes-and-labs/blob/master/proxylab/%E7%BA%BF%E7%A8%8Becho.png)
+    + 传递**指向堆**的单独分配区域的指针
+    + 如果不这样(选择直接传主线程的地址)，可能引起竞争(我们假设了thread解引用在主线程的下一次循环开始前完成)
 
-+ 线程调用的所有函数都必须是线程安全的
++ #### 线程调用的所有函数都必须是线程安全的
