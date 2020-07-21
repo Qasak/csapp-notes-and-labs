@@ -125,3 +125,5 @@ FIFO（命名管道）、system v共享内存和信号量
 
 线程上下文=程序上下文
 
+![img](https://github.com/Qasak/csapp-notes-and-labs/blob/master/proxylab/%E7%BA%BF%E7%A8%8B.png)
+
