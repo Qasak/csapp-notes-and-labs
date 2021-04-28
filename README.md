@@ -77,4 +77,4 @@ CSAPP lab全部题解
 
 # GitHub End
 ```
-Create a new branch is quick AND simple.
+Create a new branch is quick & simple.
