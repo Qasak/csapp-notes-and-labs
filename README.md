@@ -77,8 +77,4 @@ CSAPP lab全部题解
 
 # GitHub End
 ```
-<<<<<<< HEAD
-Create a new branch is quick AND simple.
-=======
-Create a new branch is quick AND simple.
->>>>>>> featurel
+Create a new branch is quick & simple.
