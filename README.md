@@ -77,5 +77,3 @@ CSAPP lab全部题解
 
 # GitHub End
 ```
-
-Create a new branch is quick and simple.
