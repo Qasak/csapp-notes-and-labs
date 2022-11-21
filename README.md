@@ -3,7 +3,8 @@ Solutions of *Computer Systems: A Programmer's Perspective* labs
 
 > 如果你能解决它,那它就是一道习题,否则它就是一个研究题
 
-CSAPP lab全部题解
+CSAPP lab全部题解，推荐使用obsdian阅读所有markdown文档
+![Alt read](https://github.com/Qasak/csapp-notes-and-labs/blob/master/obsdian.png)
 
 > as [O'Hallaron](https://www.cs.cmu.edu/~droh/) said in 15-213 class "whatever you do, don't cheat. " 
 >
